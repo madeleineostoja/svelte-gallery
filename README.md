@@ -1,6 +1,6 @@
 # image-masonry
 
-A justified image layout grid which maintains image aspect ratios with no trailing or incomplete last row. Best possible layout found by creating a graph of all possible row combinations and finding the shortest path through the graph using a target row height as the basis for weight / cost of each graph node.
+A responsive justified image layout grid which maintains image aspect ratios with no trailing or incomplete last row. Best possible layout found by creating a graph of all possible row combinations and finding the shortest path through the graph using a target row height as the basis for weight / cost of each graph node.
 
 ---
 
