@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div id="app"></div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.0"></script>
+  <script src="./dist/image-masonry-vue.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      components: {
+        ImageMasonryExample: ImageMasonryExample
+      },
+      template: '<div><image-masonry-example></image-masonry-example></div>'
+    });
+
+  </script>
+</body>
+
+</html>

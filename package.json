@@ -1,0 +1,53 @@
+{
+  "name": "image-masonry",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint \"src/**/*.js\" \"tests/**/*.spec.js\"",
+    "dev-react": "rollup -w -c --environment react",
+    "dev-vue": "rollup -w -c --environment vue"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fergaldoyle/image-masonry.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fergaldoyle/image-masonry/issues"
+  },
+  "homepage": "https://github.com/fergaldoyle/image-masonry#readme",
+  "devDependencies": {
+    "@babel/core": "^7.6.0",
+    "@babel/preset-env": "^7.6.0",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.3",
+    "concurrently": "^4.1.2",
+    "eslint": "^6.3.0",
+    "react": "^16.9.0",
+    "react-dom": "^16.9.0",
+    "rollup": "^1.20.3",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-uglify": "^6.0.3",
+    "rollup-plugin-vue": "^5.0.1",
+    "rollup-plugin-vue-template-compiler": "^1.0.3",
+    "styled-jsx": "^3.2.2",
+    "uglify-js": "^3.6.0",
+    "vue-template-compiler": "^2.6.10",
+    "yargs": "^14.0.0"
+  },
+  "dependencies": {
+    "element-resize-event": "^3.0.3",
+    "prop-types": "^15.7.2",
+    "react-resize-detector": "^4.2.0",
+    "rollup-plugin-babel-minify": "^9.0.0",
+    "rollup-plugin-uglify-es": "0.0.1"
+  }
+}
