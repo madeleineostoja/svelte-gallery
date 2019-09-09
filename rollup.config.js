@@ -49,6 +49,15 @@ if (argv.environment === 'react') {
   }));
 }
 
+if (argv.environment === 'litelement') {
+  input = 'docs/src/litelement/index.js';
+  plugins.push(
+    babel({
+      exclude: 'node_modules/**'
+    })
+  );
+}
+
 export default {
   input,
   output: {

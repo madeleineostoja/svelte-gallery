@@ -10,7 +10,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint \"src/**/*.js\" \"tests/**/*.spec.js\"",
     "dev-react": "rollup -w -c --environment react",
-    "dev-vue": "rollup -w -c --environment vue"
+    "dev-vue": "rollup -w -c --environment vue",
+    "dev-litelement": "rollup -w -c --environment litelement"
   },
   "repository": {
     "type": "git",
@@ -45,6 +46,7 @@
   },
   "dependencies": {
     "element-resize-event": "^3.0.3",
+    "lit-element": "^2.2.1",
     "prop-types": "^15.7.2",
     "react-resize-detector": "^4.2.0",
     "rollup-plugin-babel-minify": "^9.0.0",
