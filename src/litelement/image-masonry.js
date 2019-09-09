@@ -33,7 +33,7 @@ class ImageMasonry extends LitElement {
 
       .image-masonry-item {
         box-sizing: border-box;
-        padding: 1px
+        padding: 1px;
       }
 
       .image-masonry-item img {
@@ -57,6 +57,12 @@ class ImageMasonry extends LitElement {
     process();
   }
 
+  updated(changedProperties) {
+    if (changedProperties.get('images') || changedProperties.get('targetRowHeight')) {
+      this.scaledImages = createLayout(this.images, this.width, this.targetRowHeight);
+    }
+  }
+
   makeStyle({ scaledWidthPc, scaledHeight }) {
     return `width:${scaledWidthPc}%; height:${scaledHeight}px;`
   }
@@ -65,11 +71,9 @@ class ImageMasonry extends LitElement {
     return html `
       <div class="image-masonry">
         ${this.scaledImages.map(image => html`
-        <div class="image-masonry-item"
-              style="${this.makeStyle(image)}"
-              @click="onClick(index, $event)">
-          <img src="${image.src}" alt="${image.alt}" />
-        </div>
+          <div class="image-masonry-item" style="${this.makeStyle(image)}">
+            <img src="${image.src}" alt="${image.alt || ''}" />
+          </div>
         `)}
       </div>
     `;
