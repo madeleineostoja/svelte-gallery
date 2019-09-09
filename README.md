@@ -7,6 +7,7 @@ A responsive justified image layout grid which maintains image aspect ratios wit
 ### Examples
 * [React](https://fergaldoyle.github.io/image-masonry/react.html)
 * [Vue](https://fergaldoyle.github.io/image-masonry/vue.html)
+* [LitElement](https://fergaldoyle.github.io/image-masonry/litelement.html)
 * Angular - todo
 * Web component - todo
 
