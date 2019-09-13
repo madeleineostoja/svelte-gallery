@@ -3,19 +3,18 @@ import { argv } from 'yargs';
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
 import vue from 'rollup-plugin-vue'
-import minify from 'rollup-plugin-babel-minify';
-
-//import istanbul from 'rollup-plugin-istanbul';
+import typescript from 'rollup-plugin-typescript';
+import angular from 'rollup-plugin-angular';
+import buble from 'rollup-plugin-buble';
+import { terser } from "rollup-plugin-terser";
+import { uglify } from "rollup-plugin-uglify";
 
 const isDev = argv.w;
 const file = `docs/dist/image-masonry-${argv.environment}.js`;
 const sourcemap = isDev;
 const plugins = [
   resolve(),
-  commonjs(),
-  minify({
-    comments: false
-  })
+  commonjs()
 ];
 
 let globals = {};
@@ -31,7 +30,8 @@ if (argv.environment === 'vue') {
     }),
     babel({
       exclude: 'node_modules/**'
-    })
+    }),
+    terser()
   );
 }
 
@@ -42,19 +42,36 @@ if (argv.environment === 'react') {
     'react-dom': 'ReactDOM',
     'react': 'React'
   };
-  plugins.push(babel({
-    exclude: 'node_modules/**',
-    presets: ['@babel/preset-env', '@babel/preset-react'],
-    plugins: ['styled-jsx/babel']
-  }));
+  plugins.push(
+    babel({
+      exclude: 'node_modules/**',
+      presets: ['@babel/preset-env', '@babel/preset-react'],
+      plugins: ['styled-jsx/babel']
+    }),
+    terser()
+  );
 }
 
 if (argv.environment === 'litelement') {
   input = 'docs/src/litelement/index.js';
   plugins.push(
     babel({
+      exclude: 'node_modules/**',
+    }),
+    terser()
+  );
+}
+
+if (argv.environment === 'angular') {
+  input = 'docs/src/angular/main.ts';
+  plugins.push(
+    angular(),
+    typescript(),
+    buble({
+      objectAssign: 'Object.assign',
       exclude: 'node_modules/**'
-    })
+    }),
+    uglify()
   );
 }
 

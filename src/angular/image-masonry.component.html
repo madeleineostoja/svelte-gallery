@@ -1,0 +1,5 @@
+<div class="image-masonry">
+  <div *ngFor="let image of scaledImages; let i = index" class="image-masonry-item" [ngStyle]="makeStyle(image)">
+    <img [src]="image.src" [alt]="image.alt" />
+  </div>
+</div>

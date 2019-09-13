@@ -7,11 +7,15 @@
     "doc": "docs"
   },
   "scripts": {
+    "server": "live-server",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint \"src/**/*.js\" \"tests/**/*.spec.js\"",
     "dev-react": "rollup -w -c --environment react",
     "dev-vue": "rollup -w -c --environment vue",
-    "dev-litelement": "rollup -w -c --environment litelement"
+    "dev-litelement": "rollup -w -c --environment litelement",
+    "dev-angular": "rollup -w -c --environment angular",
+    "build": "tsc -p docs/src/angular",
+    "uglify": "uglifyjs --compress -- docs/dist/image-masonry-angular.js > docs/dist/image-masonry-angular.min.js"
   },
   "repository": {
     "type": "git",
@@ -30,26 +34,42 @@
     "babel-eslint": "^10.0.3",
     "concurrently": "^4.1.2",
     "eslint": "^6.3.0",
+    "live-server": "^1.2.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "rollup": "^1.20.3",
+    "rollup": "1.21.2",
+    "rollup-plugin-alias": "^2.0.0",
+    "rollup-plugin-angular": "^0.5.3",
     "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-babel-minify": "^9.0.0",
+    "rollup-plugin-buble": "^0.19.8",
+    "rollup-plugin-cleanup": "^3.1.1",
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^5.1.2",
+    "rollup-plugin-typescript": "^1.0.1",
     "rollup-plugin-uglify": "^6.0.3",
     "rollup-plugin-vue": "^5.0.1",
     "rollup-plugin-vue-template-compiler": "^1.0.3",
     "styled-jsx": "^3.2.2",
-    "uglify-js": "^3.6.0",
+    "typescript": "^3.6.2",
+    "uglify-js": "3.6.0",
     "vue-template-compiler": "^2.6.10",
     "yargs": "^14.0.0"
   },
   "dependencies": {
+    "@angular/common": "^8.2.6",
+    "@angular/compiler": "^8.2.6",
+    "@angular/core": "^8.2.6",
+    "@angular/forms": "^8.2.6",
+    "@angular/platform-browser": "^8.2.6",
+    "@angular/platform-browser-dynamic": "^8.2.6",
+    "@angular/router": "^8.2.6",
     "element-resize-event": "^3.0.3",
     "lit-element": "^2.2.1",
     "prop-types": "^15.7.2",
     "react-resize-detector": "^4.2.0",
-    "rollup-plugin-babel-minify": "^9.0.0",
-    "rollup-plugin-uglify-es": "0.0.1"
+    "systemjs": "^6.1.0",
+    "zone.js": "^0.10.2"
   }
 }
