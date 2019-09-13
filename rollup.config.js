@@ -8,6 +8,7 @@ import angular from 'rollup-plugin-angular';
 import buble from 'rollup-plugin-buble';
 import { terser } from "rollup-plugin-terser";
 import { uglify } from "rollup-plugin-uglify";
+import svelte from 'rollup-plugin-svelte';
 
 const isDev = argv.w;
 const file = `docs/dist/image-masonry-${argv.environment}.js`;
@@ -47,6 +48,17 @@ if (argv.environment === 'react') {
       exclude: 'node_modules/**',
       presets: ['@babel/preset-env', '@babel/preset-react'],
       plugins: ['styled-jsx/babel']
+    }),
+    terser()
+  );
+}
+
+if (argv.environment === 'svelte') {
+  input = 'docs/src/svelte/main.js';
+  plugins.push(
+    svelte(),
+    babel({
+      exclude: 'node_modules/**',
     }),
     terser()
   );
