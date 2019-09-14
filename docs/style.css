@@ -1,20 +1,3 @@
 body {
   overflow-y: scroll;
 }
-
-.image-masonry {
-  box-sizing: border-box;
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.image-masonry-item {
-  box-sizing: border-box;
-  padding: 1px
-}
-
-.image-masonry-item img {
-  display: block;
-  width: 100%;
-  height: 100%;
-}

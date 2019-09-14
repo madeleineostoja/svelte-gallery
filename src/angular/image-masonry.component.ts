@@ -5,7 +5,7 @@ import elementResizeEvent, { unbind } from 'element-resize-event';
 @Component({
   selector: 'image-masonry',
   templateUrl: './image-masonry.component.html',
-  styleUrls: ['./image-masonry.component.css']
+  styleUrls: ['./image-masonry.component.css', '../common/style.css']
 })
 export class ImageMasonryComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private elementRef: ElementRef, private changeDetectorRef: ChangeDetectorRef) { }

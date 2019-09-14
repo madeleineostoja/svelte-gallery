@@ -9,6 +9,7 @@ import buble from 'rollup-plugin-buble';
 import { terser } from "rollup-plugin-terser";
 import { uglify } from "rollup-plugin-uglify";
 import svelte from 'rollup-plugin-svelte';
+import postcss from 'rollup-plugin-postcss';
 
 const isDev = argv.w;
 const file = `docs/dist/image-masonry-${argv.environment}.js`;
@@ -44,6 +45,9 @@ if (argv.environment === 'react') {
     'react': 'React'
   };
   plugins.push(
+    postcss({
+      modules: true
+    }),
     babel({
       exclude: 'node_modules/**',
       presets: ['@babel/preset-env', '@babel/preset-react'],
@@ -67,6 +71,9 @@ if (argv.environment === 'svelte') {
 if (argv.environment === 'litelement') {
   input = 'docs/src/litelement/index.js';
   plugins.push(
+    postcss({
+      inject: false
+    }),
     babel({
       exclude: 'node_modules/**',
     }),

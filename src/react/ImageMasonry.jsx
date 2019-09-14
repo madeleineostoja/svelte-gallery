@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 import createLayout from '../common/justified-layout';
+import styles from '../common/style.css';
 
 function Image({
   image,
@@ -19,7 +20,7 @@ function Image({
   }
 
   return (
-    <div className="image-masonry-item" style={style} onClick={handleClick}>
+    <div className={`image-masonry-item ${styles['image-masonry-item']}`} style={style} onClick={handleClick}>
       <img src={src} alt={alt} />
     </div>
   );
@@ -63,7 +64,7 @@ export default function ImageMasonry({
   }, [images, targetRowHeight]);
 
   return (
-    <div className="image-masonry" ref={element}>
+    <div className={`image-masonry ${styles['image-masonry']}`} ref={element}>
       <ReactResizeDetector handleWidth refreshMode="debounce" refreshRate={5} skipOnMount onResize={onResize} />
       {state.images.map((image, i) =>
         <Image image={image} index={i} key={image.src} onClick={handleClick} />

@@ -47,3 +47,24 @@
     </div>
   {/each}
 </div>
+
+<style>
+.image-masonry {
+  box-sizing: border-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+}
+
+.image-masonry-item {
+  box-sizing: border-box;
+  padding: 1px
+}
+
+.image-masonry-item img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+</style>

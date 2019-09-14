@@ -67,3 +67,5 @@ export default {
   }
 };
 </script>
+
+<style scoped src="../common/style.css"></style>

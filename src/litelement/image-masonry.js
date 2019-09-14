@@ -1,6 +1,7 @@
-import { LitElement, html, css } from 'lit-element';
+import { LitElement, html, css, unsafeCSS } from 'lit-element';
 import createLayout from '../common/justified-layout';
 import elementResizeEvent, { unbind } from 'element-resize-event';
+import styles from '../common/style.css';
 
 class ImageMasonry extends LitElement {
   static get properties() {
@@ -25,22 +26,8 @@ class ImageMasonry extends LitElement {
         display: block;
       }
 
-      .image-masonry {
-        box-sizing: border-box;
-        display: flex;
-        flex-wrap: wrap;
-      }
+      ${unsafeCSS(styles)}
 
-      .image-masonry-item {
-        box-sizing: border-box;
-        padding: 1px;
-      }
-
-      .image-masonry-item img {
-        display: block;
-        width: 100%;
-        height: 100%;
-      }
     `;
   }
 
@@ -77,6 +64,14 @@ class ImageMasonry extends LitElement {
         `)}
       </div>
     `;
+  }
+
+  disconnectedCallback() {
+    const el = this.shadowRoot.querySelector('.image-masonry');
+    if (el) {
+      unbind(el);
+    }
+    super.disconnectedCallback();
   }
 }
 
