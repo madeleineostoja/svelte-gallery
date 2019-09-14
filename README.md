@@ -5,11 +5,11 @@ A responsive justified image layout grid which maintains image aspect ratios wit
 ---
 
 ### Examples
-* [React](https://fergaldoyle.github.io/image-masonry/react.html)
 * [Vue](https://fergaldoyle.github.io/image-masonry/vue.html)
-* [LitElement](https://fergaldoyle.github.io/image-masonry/litelement.html)
+* [React](https://fergaldoyle.github.io/image-masonry/react.html)
 * [Angular](https://fergaldoyle.github.io/image-masonry/angular.html)
 * [Svelte](https://fergaldoyle.github.io/image-masonry/svelte.html)
+* [LitElement](https://fergaldoyle.github.io/image-masonry/litelement.html)
 * Web component - todo
 
 
