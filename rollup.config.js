@@ -5,9 +5,8 @@ import commonjs from 'rollup-plugin-commonjs';
 import vue from 'rollup-plugin-vue'
 import typescript from 'rollup-plugin-typescript';
 import angular from 'rollup-plugin-angular';
-import buble from 'rollup-plugin-buble';
-import { terser } from "rollup-plugin-terser";
-import { uglify } from "rollup-plugin-uglify";
+import { terser } from 'rollup-plugin-terser';
+import { uglify } from 'rollup-plugin-uglify';
 import svelte from 'rollup-plugin-svelte';
 import postcss from 'rollup-plugin-postcss';
 
@@ -31,9 +30,11 @@ if (argv.environment === 'vue') {
       css: true
     }),
     babel({
-      exclude: 'node_modules/**'
+      exclude: 'node_modules/**',
+      presets: [ '@babel/preset-env'],
+      extensions: ['.js', '.vue']
     }),
-    terser()
+    uglify()
   );
 }
 
@@ -53,7 +54,7 @@ if (argv.environment === 'react') {
       presets: ['@babel/preset-env', '@babel/preset-react'],
       plugins: ['styled-jsx/babel']
     }),
-    terser()
+    uglify()
   );
 }
 
@@ -62,9 +63,10 @@ if (argv.environment === 'svelte') {
   plugins.push(
     svelte(),
     babel({
-      exclude: 'node_modules/**',
+      presets: [ '@babel/preset-env'],
+      extensions: ['.js', '.mjs', '.html', '.svelte' ]
     }),
-    terser()
+    uglify()
   );
 }
 
@@ -73,9 +75,6 @@ if (argv.environment === 'litelement') {
   plugins.push(
     postcss({
       inject: false
-    }),
-    babel({
-      exclude: 'node_modules/**',
     }),
     terser()
   );
@@ -86,9 +85,9 @@ if (argv.environment === 'angular') {
   plugins.push(
     angular(),
     typescript(),
-    buble({
-      objectAssign: 'Object.assign',
-      exclude: 'node_modules/**'
+    babel({
+      presets: [ '@babel/preset-env'],
+      exclude: 'node_modules/**',
     }),
     uglify()
   );
