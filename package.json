@@ -7,23 +7,26 @@
     "doc": "docs"
   },
   "scripts": {
-    "server": "live-server",
+    "server": "live-server --open=docs --watch=docs",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint \"src/**/*.js\" \"tests/**/*.spec.js\"",
-    "dev-react": "rollup -w -c --environment react",
-    "dev-vue": "rollup -w -c --environment vue",
-    "dev-litelement": "rollup -w -c --environment litelement",
-    "dev-angular": "rollup -w -c --environment angular",
-    "dev-svelte": "rollup -w -c --environment svelte",
-    "build": "tsc -p docs/src/angular",
-    "uglify": "uglifyjs --compress -- docs/dist/image-masonry-angular.js > docs/dist/image-masonry-angular.min.js"
+    "docs-vue": "rollup -w -c --environment vue",
+    "docs-react": "rollup -w -c --environment react",
+    "docs-angular": "rollup -w -c --environment angular",
+    "docs-svelte": "rollup -w -c --environment svelte",
+    "docs-litelement": "rollup -w -c --environment litelement",
+    "vue": "concurrently --kill-others \"npm run docs-vue\" \"npm run server\"",
+    "react": "concurrently --kill-others \"npm run docs-react\" \"npm run server\"",
+    "angular": "concurrently --kill-others \"npm run docs-angular\" \"npm run server\"",
+    "svelte": "concurrently --kill-others \"npm run docs-svelte\" \"npm run server\"",
+    "litelement": "concurrently --kill-others \"npm run docs-litelement\" \"npm run server\""
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fergaldoyle/image-masonry.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/fergaldoyle/image-masonry/issues"
   },

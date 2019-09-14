@@ -1,12 +1,16 @@
 <script>
-  import ImageMasonry from "../../../src/svelte/ImageMasonry.svelte";
-  import sampleImages from "../images";
+  import ImageMasonry from '../../../src/svelte/ImageMasonry.svelte';
+  import sampleImages from '../images';
 
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
     }
+  }
+
+  function onClick(event) {
+    console.log(event);
   }
 
   let images = sampleImages;
@@ -25,4 +29,4 @@
 </script>
 
 <button type="button" on:click={onChangeImages}>Change images</button> <button type="button" on:click={onChangeRowHeight}>Change row height</button>
-<ImageMasonry images={images} targetRowHeight={targetRowHeight}/>
+<ImageMasonry images={images} targetRowHeight={targetRowHeight} on:image-click={onClick} />
