@@ -54,4 +54,4 @@ export default {
 }
 </script>
 
-<style src="../style.css"></style>
+<style src="../image-details.css"></style>

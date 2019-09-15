@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import ImageMasonry from '../../../src/react/ImageMasonry.jsx';
 import sampleImages from '../images';
 import openPhotoSwipe from '../photoswipe';
-import styles from '../style.css';
+import styles from '../image-details.css';
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {
