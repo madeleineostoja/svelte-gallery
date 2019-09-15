@@ -6,12 +6,10 @@ A responsive justified image layout grid which maintains image aspect ratios wit
 
 ### Examples
 * Vue: [Basic](https://fergaldoyle.github.io/image-masonry/vue-basic.html) - [Advanced](https://fergaldoyle.github.io/image-masonry/vue-advanced.html)
-* [React](https://fergaldoyle.github.io/image-masonry/react.html)
-* [Angular](https://fergaldoyle.github.io/image-masonry/angular.html)
+* React: [Basic](https://fergaldoyle.github.io/image-masonry/react-basic.html) - [Advanced](https://fergaldoyle.github.io/image-masonry/react-advanced.html)
+* Angular: [Basic](https://fergaldoyle.github.io/image-masonry/angular.html)
 * Svelte: [Basic](https://fergaldoyle.github.io/image-masonry/svelte-basic.html) - [Advanced](https://fergaldoyle.github.io/image-masonry/svelte-advanced.html)
-* [Web component - LitElement](https://fergaldoyle.github.io/image-masonry/litelement.html)
-* Web component - Native - todo
-
+* Web component - LitElement:  [Basic](https://fergaldoyle.github.io/image-masonry/litelement.html)
 
 
 ---
