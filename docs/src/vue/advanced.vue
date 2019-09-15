@@ -1,6 +1,5 @@
 <template>
   <div>
-
     <div class="pb-3 text-right">
       <button class="btn btn-light btn-sm" type="button" @click="onChangeImages">Shuffle images</button>
       <button class="btn btn-light btn-sm" type="button" @click="onChangeRowHeight">Increase row height</button>
@@ -8,13 +7,8 @@
 
     <image-masonry :images="images" :targetRowHeight="targetRowHeight" @image-click="onClick" ref="imageMasonry">
       <template v-slot="{image}">
-        <div>
-          <a class="image-masonry-overlay" href="javascript:void(0)"></a>
-          <div class="image-masonry-item-interact has-content">
-            <div class="image-masonry-bar">
-              <div class="image-masonry-text">{{image.title}}</div>
-            </div>
-          </div>
+        <div class="image-masonry-overlay">
+          <div class="image-masonry-text">{{image.title}}</div>
         </div>
       </template>
     </image-masonry>
@@ -59,3 +53,5 @@ export default {
   }
 }
 </script>
+
+<style src="../style.css"></style>
