@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>React - Image Masonry</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="style/theme.css">
+</head>
+
+<body>
+  <div class="cover-container p-3 pb-5 mx-auto">
+    <header class="masthead">
+      <div class="inner">
+        <h3 class="masthead-brand text-center">Image Masonry</h3>
+        <nav class="nav nav-masthead justify-content-center">
+          <a class="nav-link active" href="react-basic.html">Basic</a>
+          <a class="nav-link" href="react-advanced.html">Advanced</a>
+          <a class="nav-link" href="https://github.com/fergaldoyle/image-masonry">Github</a>
+        </nav>
+      </div>
+    </header>
+
+    <main role="main">
+      <div class="text-center pt-5 pb-4">
+        <h1 class="cover-heading">React - Basic example</h1>
+        <p class="lead">Component defaults, just pass in an array of image objects.</p>
+        <p class="lead">
+          <a href="https://github.com/fergaldoyle/image-masonry/blob/master/docs/src/react/Basic.jsx" class="btn btn-secondary">View source</a>
+        </p>
+      </div>
+      <div id="App"></div>
+    </main>
+
+  </div>
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script crossorigin src="https://unpkg.com/prop-types@15.7.2/prop-types.min.js"></script>
+
+  <script src="./dist/image-masonry-react.js"></script>
+  <script>
+    ReactDOM.render(
+      React.createElement(ImageMasonryExample, {}, null),
+      document.getElementById('App')
+    );
+  </script>
+</body>
+</html>

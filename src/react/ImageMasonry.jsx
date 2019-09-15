@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import ReactResizeDetector from 'react-resize-detector';
 import createLayout from '../common/justified-layout';
 import styles from '../common/style.css';
@@ -6,7 +6,8 @@ import styles from '../common/style.css';
 function Image({
   image,
   index,
-  onClick
+  onClick,
+  render
 }) {
 
   const { src, alt, scaledWidthPc, scaledHeight } = image;
@@ -22,6 +23,7 @@ function Image({
   return (
     <div className={`image-masonry-item ${styles['image-masonry-item']}`} style={style} onClick={handleClick}>
       <img src={src} alt={alt} />
+      {render && render(image)}
     </div>
   );
 }
@@ -29,7 +31,8 @@ function Image({
 export default function ImageMasonry({
   images,
   targetRowHeight,
-  onClick
+  onImageClick,
+  render
 }) {
 
   const element = useRef(null);
@@ -39,8 +42,8 @@ export default function ImageMasonry({
   });
 
   const handleClick = (index, event) => {
-    if (onClick) {
-      onClick(images[index], index, event);
+    if (onImageClick) {
+      onImageClick(images[index], index, event);
     }
   }
 
@@ -67,7 +70,7 @@ export default function ImageMasonry({
     <div className={`image-masonry ${styles['image-masonry']}`} ref={element}>
       <ReactResizeDetector handleWidth refreshMode="debounce" refreshRate={5} skipOnMount onResize={onResize} />
       {state.images.map((image, i) =>
-        <Image image={image} index={i} key={image.src} onClick={handleClick} />
+        <Image image={image} index={i} key={image.src} onClick={handleClick} render={render} />
       )}
     </div>
   );

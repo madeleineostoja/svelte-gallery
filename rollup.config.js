@@ -38,8 +38,8 @@ if (env === 'vue' || env === 'vue-advanced') {
   );
 }
 
-if (env === 'react') {
-  input = 'docs/src/react/Index.jsx';
+if (env === 'react' || env === 'react-advanced') {
+  input = `docs/src/react/${ env === 'react' ? 'basic' : 'advanced' }.jsx`;
   globals = {
     'prop-types': 'PropTypes',
     'react-dom': 'ReactDOM',
