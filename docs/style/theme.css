@@ -30,6 +30,10 @@ a:hover {
  * Base structure
  */
 
+body {
+  overflow-y: scroll;
+}
+
 html,
 body {
   /* height: 100%; */

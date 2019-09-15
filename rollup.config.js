@@ -58,8 +58,9 @@ if (env === 'react') {
   );
 }
 
-if (env === 'svelte') {
-  input = 'docs/src/svelte/main.js';
+
+if (env === 'svelte' || env === 'svelte-advanced') {
+  input = `docs/src/svelte/${ env === 'svelte' ? 'basic' : 'advanced' }.js`;
   plugins.push(
     svelte(),
     babel({

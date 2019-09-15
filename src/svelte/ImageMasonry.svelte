@@ -8,7 +8,10 @@
   }
 
   function onClick(index) {
-    dispatch('image-click', images[index]);
+    dispatch('image-click', {
+      image: images[index],
+      index
+    });
   }
 
   const dispatch = createEventDispatcher();
@@ -44,6 +47,7 @@
   {#each scaledImages as image, index}
     <div class="image-masonry-item" style={makeStyle(image)} on:click={()=>onClick(index)}>
       <img src={image.src} alt={image.alt} />
+      <slot image={image} index={index}></slot>
     </div>
   {/each}
 </div>
@@ -59,6 +63,7 @@
 
 .image-masonry-item {
   box-sizing: border-box;
+  position: relative;
   padding: 1px
 }
 
