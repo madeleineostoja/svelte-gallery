@@ -10,9 +10,9 @@ import { uglify } from 'rollup-plugin-uglify';
 import svelte from 'rollup-plugin-svelte';
 import postcss from 'rollup-plugin-postcss';
 
-const isDev = argv.w;
-const file = `docs/dist/image-masonry-${argv.environment}.js`;
-const sourcemap = isDev;
+const env = argv.environment;
+const file = `docs/dist/image-masonry-${env}.js`;
+const sourcemap = true;
 const plugins = [
   resolve(),
   commonjs()
@@ -21,8 +21,8 @@ const plugins = [
 let globals = {};
 let input = '';
 
-if (argv.environment === 'vue') {
-  input = 'docs/src/vue/index.vue';
+if (env === 'vue' || env === 'vue-advanced') {
+  input = `docs/src/vue/${ env === 'vue' ? 'basic' : 'advanced' }.vue`;
   plugins.push(
     vue({
       needMap: false,
@@ -38,7 +38,7 @@ if (argv.environment === 'vue') {
   );
 }
 
-if (argv.environment === 'react') {
+if (env === 'react') {
   input = 'docs/src/react/Index.jsx';
   globals = {
     'prop-types': 'PropTypes',
@@ -58,7 +58,7 @@ if (argv.environment === 'react') {
   );
 }
 
-if (argv.environment === 'svelte') {
+if (env === 'svelte') {
   input = 'docs/src/svelte/main.js';
   plugins.push(
     svelte(),
@@ -70,7 +70,7 @@ if (argv.environment === 'svelte') {
   );
 }
 
-if (argv.environment === 'litelement') {
+if (env === 'litelement') {
   input = 'docs/src/litelement/index.js';
   plugins.push(
     postcss({
@@ -80,7 +80,7 @@ if (argv.environment === 'litelement') {
   );
 }
 
-if (argv.environment === 'angular') {
+if (env === 'angular') {
   input = 'docs/src/angular/main.ts';
   plugins.push(
     angular(),

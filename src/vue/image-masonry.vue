@@ -5,6 +5,7 @@
           :style="makeStyle(image)"
           @click="onClick(index, $event)">
       <img :src="image.src" :alt="image.alt" />
+      <slot :image="image" :index="index"></slot>
     </div>
   </div>
 </template>
@@ -60,7 +61,6 @@ export default {
     });
 
     this.$watch('targetRowHeight', process);
-
   },
   beforeDestroy() {
     unbind(this.$el);

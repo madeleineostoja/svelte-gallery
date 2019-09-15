@@ -8,6 +8,7 @@
 
 .image-masonry-item {
   box-sizing: border-box;
+  position: relative;
   padding: 1px
 }
 
