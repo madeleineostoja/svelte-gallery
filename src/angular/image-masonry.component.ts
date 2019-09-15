@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, OnDestroy, ElementRef, ChangeDetectorRef, SimpleChanges } from '@angular/core';
+import { Component, Input, OnInit, OnChanges, OnDestroy, ElementRef, ChangeDetectorRef, SimpleChanges, ContentChild, TemplateRef, EventEmitter, Output } from '@angular/core';
 import createLayout from '../common/justified-layout.js';
 import elementResizeEvent, { unbind } from 'element-resize-event';
 
@@ -9,7 +9,8 @@ import elementResizeEvent, { unbind } from 'element-resize-event';
 })
 export class ImageMasonryComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private elementRef: ElementRef, private changeDetectorRef: ChangeDetectorRef) { }
-
+  @Output() imageClick: EventEmitter<any> = new EventEmitter();
+  @ContentChild('imageDetails', {static: false}) imageDetailsTmpl: TemplateRef<any>;
   @Input() images: any[];
   @Input() targetRowHeight: number = 220;
 
@@ -48,6 +49,12 @@ export class ImageMasonryComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  onClick() { }
+  onClick(index: number, event: any) {
+    this.imageClick.emit({
+      image: this.images[index],
+      index,
+      event
+    });
+  }
 
 }

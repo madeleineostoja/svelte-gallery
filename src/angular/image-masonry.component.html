@@ -1,5 +1,6 @@
 <div class="image-masonry">
-  <div *ngFor="let image of scaledImages; let i = index" class="image-masonry-item" [ngStyle]="makeStyle(image)">
+  <div *ngFor="let image of scaledImages; let i = index" class="image-masonry-item" [ngStyle]="makeStyle(image)" (click)="onClick(i, $event)">
     <img [src]="image.src" [alt]="image.alt" />
+    <ng-container *ngTemplateOutlet="imageDetailsTmpl, context: { $implicit: image }"></ng-container>
   </div>
 </div>

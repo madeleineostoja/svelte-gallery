@@ -25,6 +25,9 @@ a:hover {
   background-color: #eee;
 }
 
+.btn + .btn {
+  margin-left: 5px;
+}
 
 /*
  * Base structure

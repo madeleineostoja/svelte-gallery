@@ -1,4 +1,31 @@
-<div>
-  <button type="button" (click)="onChangeImages()">Change images</button>   <button type="button" (click)="onChangeRowHeight()">Change row height</button>
-  <image-masonry [images]="images" [targetRowHeight]="targetRowHeight"></image-masonry>
+<div class="cover-container p-3 pb-5 mx-auto">
+  <header class="masthead">
+    <div class="inner">
+      <h3 class="masthead-brand text-center">Image Masonry</h3>
+      <nav class="nav nav-masthead justify-content-center">
+        <a class="nav-link" routerLink="/basic" routerLinkActive="active">Basic</a>
+        <a class="nav-link" routerLink="/advanced" routerLinkActive="active">Advanced</a>
+        <a class="nav-link" href="https://github.com/fergaldoyle/image-masonry">Github</a>
+      </nav>
+    </div>
+  </header>
+
+  <main role="main">
+    <div class="text-center pt-5 pb-4">
+      <ng-template [ngIf]="isBasic" [ngIfElse]="elseBlock">
+        <h1 class="cover-heading">Angular - Basic example</h1>
+        <p class="lead">Component defaults, just pass in an array of image objects.</p>
+      </ng-template>
+      <ng-template #elseBlock>
+        <h1 class="cover-heading">Angular - Advanced example</h1>
+        <p class="lead">Example using content projection to show image title on hover, and open PhotoSwipe on image click</p>
+      </ng-template>
+      <p class="lead">
+        <a href="https://github.com/fergaldoyle/image-masonry/blob/master/docs/src/angular/{{route}}-example/" class="btn btn-secondary">View source</a>
+      </p>
+    </div>
+
+    <router-outlet></router-outlet>
+
+  </main>
 </div>

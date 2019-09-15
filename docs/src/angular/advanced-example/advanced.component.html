@@ -1,0 +1,13 @@
+<div>
+  <div class="pb-3 text-right">
+    <button class="btn btn-light btn-sm" type="button" (click)="onChangeImages()">Shuffle images</button>
+    <button class="btn btn-light btn-sm" type="button" (click)="onChangeRowHeight()">Increase row height</button>
+  </div>
+  <image-masonry [images]="images" [targetRowHeight]="targetRowHeight" (imageClick)="onImageClick($event)">
+    <ng-template #imageDetails let-image>
+      <div class="image-masonry-overlay">
+        <div class="image-masonry-text">{{image.title}}</div>
+      </div>
+    </ng-template>
+  </image-masonry>
+</div>
