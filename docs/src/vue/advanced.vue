@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import sampleImages from '../images';
+import sampleImages from '../images-advanced';
 import imageMasonry from '../../../src/vue/image-masonry.vue';
 import openPhotoSwipe from '../photoswipe';
 
@@ -45,7 +45,17 @@ export default {
       this.targetRowHeight = this.targetRowHeight + 50
     },
     onClick(image, index) {
-      openPhotoSwipe(this.images, index, {
+      // create array compatible with PhotoSwipe
+      const images = this.images.map(({ src, width, height, original, title }) => {
+        return {
+          src: original,
+          msrc: src,
+          w: width,
+          h: height,
+          title
+        }
+      });
+      openPhotoSwipe(images, index, {
         container: this.$refs.imageMasonry.$el,
         selector: '.image-masonry-item'
       });

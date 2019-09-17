@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import ImageMasonry from '../../../src/react/ImageMasonry.jsx';
-import sampleImages from '../images';
+import sampleImages from '../images-advanced';
 import openPhotoSwipe from '../photoswipe';
 import styles from '../image-details.css';
 
@@ -37,7 +37,17 @@ export default function () {
   }
 
   const handleImageClick = (image, index) => {
-    openPhotoSwipe(images, index, {
+    // create array compatible with PhotoSwipe
+    const imgs = images.map(({ src, width, height, original, title }) => {
+      return {
+        src: original,
+        msrc: src,
+        w: width,
+        h: height,
+        title
+      }
+    });
+    openPhotoSwipe(imgs, index, {
       container: element.current,
       selector: '.image-masonry-item'
     });

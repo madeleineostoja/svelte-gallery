@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import images from '../../images';
+import images from '../../images-advanced';
 import openPhotoSwipe from '../../photoswipe';
 
 function shuffleArray(array: any[]) {
@@ -29,7 +29,17 @@ export class AdvancedComponent {
   }
 
   onImageClick({ index }) {
-    openPhotoSwipe(this.images, index, {
+    // create array compatible with PhotoSwipe
+    const images = this.images.map(({ src, width, height, original, title }) => {
+      return {
+        src: original,
+        msrc: src,
+        w: width,
+        h: height,
+        title
+      }
+    });
+    openPhotoSwipe(images, index, {
       container: document.body,
       selector: '.image-masonry-item'
     });

@@ -1,6 +1,6 @@
 <script>
   import ImageMasonry from '../../../src/svelte/ImageMasonry.svelte';
-  import sampleImages from '../images';
+  import sampleImages from '../images-advanced';
   import openPhotoSwipe from '../photoswipe';
 
   function shuffleArray(array) {
@@ -11,7 +11,17 @@
   }
 
   function onClick(event) {
-    openPhotoSwipe(images, event.detail.index, {
+    // create array compatible with PhotoSwipe
+    const imgs = images.map(({ src, width, height, original, title }) => {
+      return {
+        src: original,
+        msrc: src,
+        w: width,
+        h: height,
+        title
+      }
+    });
+    openPhotoSwipe(imgs, event.detail.index, {
       container: document.body,
       selector: '.image-masonry-item'
     });

@@ -1,6 +1,6 @@
 import { LitElement, html, css, unsafeCSS } from 'lit-element';
 import '../../../src/litelement/image-masonry';
-import sampleImages from '../images';
+import sampleImages from '../images-advanced';
 import styles from '../image-details.css';
 import openPhotoSwipe from '../photoswipe';
 
@@ -40,7 +40,17 @@ class ImageMasonryExample extends LitElement {
   }
 
   onImageClick({ detail }) {
-    openPhotoSwipe(this.images, detail.index, {
+    // create array compatible with PhotoSwipe
+    const images = this.images.map(({ src, width, height, original, title }) => {
+      return {
+        src: original,
+        msrc: src,
+        w: width,
+        h: height,
+        title
+      }
+    });
+    openPhotoSwipe(images, detail.index, {
       container: this.shadowRoot.querySelector('image-masonry').shadowRoot,
       selector: '.image-masonry-item'
     });

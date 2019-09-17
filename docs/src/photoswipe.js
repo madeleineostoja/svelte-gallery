@@ -4,15 +4,7 @@ import PhotoSwipeUI_Default from 'photoswipe/dist/photoswipe-ui-default';
 const cssPath = './photoswipe';
 
 export default function(images, index, thumbData) {
-  const imgs = images.map(image => {
-    return {
-      ...image,
-      w: image.w || image.width,
-      h: image.h || image.height
-    };
-  });
-
-  const gallery = new PhotoSwipe(document.querySelector('.pswp'), PhotoSwipeUI_Default, imgs, {
+  const gallery = new PhotoSwipe(document.querySelector('.pswp'), PhotoSwipeUI_Default, images, {
     history: false,
     closeOnScroll: false,
     index: +index,
