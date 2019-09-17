@@ -9,7 +9,9 @@ class ImageMasonry extends LitElement {
       images: { type: Array },
       scaledImages: { type: Array },
       width: { type: Number },
-      targetRowHeight: { type: Number }
+      targetRowHeight: { type: Number },
+      imageTemplate: { type: Function },
+      imageStyle: { type: String }
     };
   }
 
@@ -25,9 +27,7 @@ class ImageMasonry extends LitElement {
       :host {
         display: block;
       }
-
       ${unsafeCSS(styles)}
-
     `;
   }
 
@@ -54,12 +54,25 @@ class ImageMasonry extends LitElement {
     return `width:${scaledWidthPc}%; height:${scaledHeight}px;`
   }
 
+  handleClick(index, event) {
+    const e = new CustomEvent('image-click', {
+      detail: {
+        index,
+        event,
+        image: this.images[index]
+      }
+    });
+    this.dispatchEvent(e);
+  }
+
   render() {
     return html `
+      ${this.imageStyle ?  html`<style>${this.imageStyle}</style>` : ''}
       <div class="image-masonry">
-        ${this.scaledImages.map(image => html`
-          <div class="image-masonry-item" style="${this.makeStyle(image)}">
+        ${this.scaledImages.map((image, index) => html`
+          <div class="image-masonry-item" style="${this.makeStyle(image)}" @click="${e => this.handleClick(index, e)}">
             <img src="${image.src}" alt="${image.alt || ''}" />
+            ${this.imageTemplate && this.imageTemplate(image, index)}
           </div>
         `)}
       </div>

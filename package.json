@@ -18,11 +18,12 @@
     "docs-svelte": "rollup -w -c --environment svelte",
     "docs-svelte-advanced": "rollup -w -c --environment svelte-advanced",
     "docs-litelement": "rollup -w -c --environment litelement",
+    "docs-litelement-advanced": "rollup -w -c --environment litelement-advanced",
     "vue": "concurrently --kill-others \"npm run docs-vue\" \"npm run docs-vue-advanced\" \"npm run server\"",
     "react": "concurrently --kill-others \"npm run docs-react\" \"npm run docs-react-advanced\" \"npm run server\"",
     "angular": "concurrently --kill-others \"npm run docs-angular\" \"npm run server\"",
     "svelte": "concurrently --kill-others \"npm run docs-svelte\" \"npm run docs-svelte-advanced\" \"npm run server\"",
-    "litelement": "concurrently --kill-others \"npm run docs-litelement\" \"npm run server\""
+    "litelement": "concurrently --kill-others \"npm run docs-litelement\" \"npm run docs-litelement-advanced\" \"npm run server\""
   },
   "repository": {
     "type": "git",

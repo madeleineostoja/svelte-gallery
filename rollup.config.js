@@ -71,8 +71,8 @@ if (env === 'svelte' || env === 'svelte-advanced') {
   );
 }
 
-if (env === 'litelement') {
-  input = 'docs/src/litelement/index.js';
+if (env === 'litelement' || env === 'litelement-advanced') {
+  input = `docs/src/litelement/${ env === 'litelement' ? 'basic' : 'advanced' }.js`;
   plugins.push(
     postcss({
       inject: false
