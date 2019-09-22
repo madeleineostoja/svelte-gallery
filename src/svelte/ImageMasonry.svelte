@@ -2,9 +2,11 @@
   import { onMount, createEventDispatcher } from 'svelte';
   import createLayout from '../common/justified-layout';
   import elementResizeEvent, { unbind } from 'element-resize-event';
+  import LazyImage from './LazyImage.svelte';
+  import getEmitter from '../common/emitter';
 
-  function makeStyle({ scaledWidthPc, scaledHeight }) {
-    return `width:${scaledWidthPc}%; height:${scaledHeight}px`;
+  function makeStyle({ scaledWidth, scaledHeight }) {
+    return `width:${scaledWidth}px; height:${scaledHeight}px; margin-right:${padding}px`;
   }
 
   function onClick(index) {
@@ -18,16 +20,23 @@
 
   // props
   export let images = [];
-  export let targetRowHeight = 200;
+  export let targetRowHeight = 220;
+  export let padding = 4;
 
   // state
   let element;
   let scaledImages = [];
   let width;
+  let emitter = getEmitter();
 
   // reactive statement
   $: if (width) {
-    scaledImages = createLayout(images, width, targetRowHeight);
+    scaledImages = createLayout({
+      images,
+      containerWidth: width,
+      targetHeight: targetRowHeight,
+      padding
+    });
   }
 
   onMount(() => {
@@ -44,32 +53,16 @@
 </script>
 
 <div class="image-masonry" bind:this={element}>
-  {#each scaledImages as image, index}
-    <div class="image-masonry-item" style={makeStyle(image)} on:click={()=>onClick(index)}>
-      <img src={image.src} alt={image.alt} />
-      <slot image={image} index={index}></slot>
+  {#each scaledImages as row}
+    <div class="masonry-row" style="margin-bottom: {padding}px">
+      {#each row as image (image.src)}
+        <div class="masonry-item" style={makeStyle(image)} on:click={()=>onClick(image.index)}>
+          <LazyImage {...image} emitter={emitter} />
+          <slot image={image}></slot>
+        </div>
+      {/each}
     </div>
   {/each}
 </div>
 
-<style>
-.image-masonry {
-  box-sizing: border-box;
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
-}
-
-.image-masonry-item {
-  box-sizing: border-box;
-  position: relative;
-  padding: 1px
-}
-
-.image-masonry-item img {
-  display: block;
-  width: 100%;
-  height: 100%;
-}
-</style>
+<style src="../common/style.css"></style>

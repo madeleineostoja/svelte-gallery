@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnChanges, OnDestroy, ElementRef, ChangeDetectorRef, SimpleChanges, ContentChild, TemplateRef, EventEmitter, Output } from '@angular/core';
 import createLayout from '../common/justified-layout.js';
 import elementResizeEvent, { unbind } from 'element-resize-event';
+import getEmitter from '../common/emitter';
 
 @Component({
   selector: 'image-masonry',
@@ -10,18 +11,21 @@ import elementResizeEvent, { unbind } from 'element-resize-event';
 export class ImageMasonryComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private elementRef: ElementRef, private changeDetectorRef: ChangeDetectorRef) { }
   @Output() imageClick: EventEmitter<any> = new EventEmitter();
-  @ContentChild('imageDetails', {static: false}) imageDetailsTmpl: TemplateRef<any>;
+  @ContentChild('imageDetails', { static: false }) imageDetailsTmpl: TemplateRef<any>;
   @Input() images: any[];
   @Input() targetRowHeight: number = 220;
+  @Input() padding: number = 4;
 
   scaledImages = [];
   width = 0;
+  emitter = getEmitter();
 
   ngOnInit() {
     const el = this.elementRef.nativeElement;
     elementResizeEvent(this.elementRef.nativeElement, () => {
       if (Math.round(this.width) !== Math.round(el.getBoundingClientRect().width)) {
         this.process();
+        this.emitter.emit('viewportChange');
         this.changeDetectorRef.detectChanges();
       }
     });
@@ -39,13 +43,19 @@ export class ImageMasonryComponent implements OnInit, OnChanges, OnDestroy {
 
   process() {
     this.width = this.elementRef.nativeElement.getBoundingClientRect().width;
-    this.scaledImages = createLayout(this.images, this.width, this.targetRowHeight);
+    this.scaledImages = createLayout({
+      images: this.images,
+      containerWidth: this.width,
+      targetHeight: this.targetRowHeight,
+      padding: this.padding
+    })
   }
 
-  makeStyle({ scaledWidthPc, scaledHeight }) {
+  makeStyle({ scaledWidth, scaledHeight }) {
     return {
-      width: scaledWidthPc + '%',
-      height: scaledHeight + 'px'
+      width: scaledWidth + 'px',
+      height: scaledHeight + 'px',
+      'margin-right': this.padding + 'px'
     }
   }
 
@@ -57,4 +67,11 @@ export class ImageMasonryComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
+  identify(index, item) {
+    if(item instanceof Array) {
+      return index;
+    } else {
+      return item.src;
+    }
+  }
 }

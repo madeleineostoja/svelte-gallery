@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef } from '@angular/core';
 import images from '../../images-advanced';
 import openPhotoSwipe from '../../photoswipe';
 
@@ -15,8 +15,10 @@ function shuffleArray(array: any[]) {
   styleUrls: ['../../image-details.css']
 })
 export class AdvancedComponent {
+  constructor(private elementRef: ElementRef) { }
+
   images = images;
-  targetRowHeight = 200;
+  targetRowHeight = 220;
 
   onChangeImages () {
     const newArray = [...images];
@@ -39,9 +41,8 @@ export class AdvancedComponent {
         title
       }
     });
-    openPhotoSwipe(images, index, {
-      container: document.body,
-      selector: '.image-masonry-item'
+    openPhotoSwipe(images, index, (index) => {
+      return this.elementRef.nativeElement.querySelector('image-masonry').querySelectorAll('[data-masonry-image]')[index];
     });
   }
 

@@ -1,45 +1,24 @@
 import { useState, useRef, useEffect } from 'react';
 import ReactResizeDetector from 'react-resize-detector';
+import MasonryItem from './MasonryItem.jsx';
 import createLayout from '../common/justified-layout';
 import styles from '../common/style.css';
-
-function Image({
-  image,
-  index,
-  onClick,
-  render
-}) {
-
-  const { src, alt, scaledWidthPc, scaledHeight } = image;
-  const style = {
-    width: scaledWidthPc + '%',
-    height: scaledHeight + 'px',
-  }
-
-  const handleClick = event => {
-    onClick(index, event);
-  }
-
-  return (
-    <div className={`image-masonry-item ${styles['image-masonry-item']}`} style={style} onClick={handleClick}>
-      <img src={src} alt={alt} />
-      {render && render(image)}
-    </div>
-  );
-}
+import getEmitter from '../common/emitter';
 
 export default function ImageMasonry({
   images,
   targetRowHeight,
   onImageClick,
+  padding,
   render
 }) {
-
   const element = useRef(null);
   const [state, setState] = useState({
     images: [],
     width: 0
   });
+  const [emitter, setEmitter] = useState();
+  const rowStyle = { marginBottom: padding + 'px' };
 
   const handleClick = (index, event) => {
     if (onImageClick) {
@@ -49,9 +28,15 @@ export default function ImageMasonry({
 
   // re-render on element resize
   const onResize = width => {
+    emitter.emit('viewportChange');
     if (Math.round(width) !== Math.round(state.width)) {
       setState({
-        images: createLayout(images, width, targetRowHeight),
+        images: createLayout({
+          images,
+          containerWidth: width,
+          targetHeight: targetRowHeight,
+          padding: padding
+        }),
         width
       });
     }
@@ -61,16 +46,39 @@ export default function ImageMasonry({
   useEffect(() => {
     const width = element.current.getBoundingClientRect().width;
     setState({
-      images: createLayout(images, width, targetRowHeight),
+      images: createLayout({
+        images,
+        containerWidth: width,
+        targetHeight: targetRowHeight,
+        padding: padding
+      }),
       width
     })
   }, [images, targetRowHeight]);
 
+  useEffect(() => {
+    setEmitter(getEmitter());
+    return () => {
+      emitter.off('viewportChange');
+      emitter._unbind();
+    }
+  }, []);
+
   return (
-    <div className={`image-masonry ${styles['image-masonry']}`} ref={element}>
-      <ReactResizeDetector handleWidth refreshMode="debounce" refreshRate={5} skipOnMount onResize={onResize} />
-      {state.images.map((image, i) =>
-        <Image image={image} index={i} key={image.src} onClick={handleClick} render={render} />
+    <div className={styles['image-masonry']} ref={element}>
+      <ReactResizeDetector
+        handleWidth
+        refreshMode="debounce"
+        refreshRate={5}
+        skipOnMount
+        onResize={onResize}
+      />
+      {state.images.map((row, i) =>
+        <div className={styles['masonry-row']} key={i} style={rowStyle}>
+          {row.map(image =>
+            <MasonryItem key={image.src} image={image} onClick={handleClick} padding={padding} render={render} emitter={emitter} />
+          )}
+        </div>
       )}
     </div>
   );
@@ -79,5 +87,6 @@ export default function ImageMasonry({
 
 ImageMasonry.defaultProps = {
   images: [],
-  targetRowHeight: 220
+  targetRowHeight: 220,
+  padding: 4
 };

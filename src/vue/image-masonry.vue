@@ -1,71 +1,110 @@
 <template>
   <div class="image-masonry">
-    <div v-for="(image, index) in scaledImages"
-          :key="image.src" class="image-masonry-item"
-          :style="makeStyle(image)"
-          @click="onClick(index, $event)">
-      <img :src="image.src" :alt="image.alt" />
-      <slot :image="image" :index="index"></slot>
+
+    <div class="masonry-row" v-for="(row, index) in scaledImages" :key="index" :style="{'margin-bottom' : padding + 'px'}" >
+      <div
+        v-for="image in row"
+        :key="image.src"
+        class="masonry-item"
+        :style="makeStyle(image)"
+        @click="onClick(image.index, $event)"
+      >
+        <lazy-image
+          class="masonry-image"
+          :emitter="emitter"
+          :src="image.src"
+          :alt="image.alt"
+          :srcset="image.srcset"
+          v-if="true"
+        />
+        <img :key="image.src" v-else class="image" data-masonry-image :src="image.src" :alt="image.alt" :srcset="image.srcset" >
+        <slot :image="image" :index="index"></slot>
+      </div>
     </div>
+
   </div>
 </template>
 
 <script>
-import createLayout from '../common/justified-layout';
-import elementResizeEvent, { unbind } from 'element-resize-event';
+  import createLayout from '../common/justified-layout';
+  import elementResizeEvent, { unbind } from 'element-resize-event';
+  import lazyImage from './lazy-image.vue';
+  import getEmitter from '../common/emitter';
 
-export default {
-  props: {
-    images: {
-      type: Array,
-      required: true,
-      default: []
-    },
-    targetRowHeight: {
-      type: Number,
-      default: 220
-    }
-  },
-  data: () => ({
-    scaledImages: [],
-    width: 0
-  }),
-  methods: {
-    makeStyle({ scaledWidthPc, scaledHeight }) {
-      return {
-        width: scaledWidthPc + '%',
-        height: scaledHeight + 'px'
+  export default {
+    props: {
+      images: {
+        type: Array,
+        required: true,
+        default: []
+      },
+      targetRowHeight: {
+        type: Number,
+        default: 220
+      },
+      padding: {
+        type: Number,
+        default: 4
       }
     },
-    onClick(index, event) {
-      this.$emit('image-click', this.images[index], index, event);
-    }
-  },
-  mounted() {
-    const process = () => {
-      this.width = this.$el.getBoundingClientRect().width;
-      this.scaledImages = createLayout(this.images, this.width, this.targetRowHeight);
-    }
+    data: () => ({
+      scaledImages: [],
+      width: 0,
+      emitter: null
+    }),
+    components: {
+      lazyImage
+    },
+    methods: {
+      makeStyle({ scaledHeight, scaledWidth }) {
+        return {
+          width: scaledWidth + 'px',
+          height: scaledHeight + 'px',
+          'margin-right': this.padding + 'px'
+        };
+      },
+      onClick(index, event) {
+        this.$emit('image-click', this.images[index], index, event);
+      }
+    },
+    created() {
+      this.emitter = getEmitter();
+    },
+    mounted() {
+      const process = () => {
+        this.width = this.$el.getBoundingClientRect().width;
+        this.scaledImages = createLayout({
+          images: this.images,
+          containerWidth: this.width,
+          targetHeight: this.targetRowHeight,
+          padding: this.padding
+        });
+      };
 
-    elementResizeEvent(this.$el, () => {
-      if (Math.round(this.width) !== Math.round(this.$el.getBoundingClientRect().width)) {
+      elementResizeEvent(this.$el, () => {
+        if (Math.round(this.width) !== Math.round(this.$el.getBoundingClientRect().width)) {
+          process();
+          this.$nextTick(() => {
+            this.emitter.emit('viewportChange');
+          });
+        }
+      });
+
+      this.$watch('images', () => {
         process();
-      }
-    });
+      }, {
+        immediate: true,
+        deep: true
+      });
 
-    this.$watch('images', () => {
-      process();
-    }, {
-      immediate: true,
-      deep: true
-    });
-
-    this.$watch('targetRowHeight', process);
-  },
-  beforeDestroy() {
-    unbind(this.$el);
-  }
-};
+      this.$watch('targetRowHeight', process);
+    },
+    beforeDestroy() {
+      unbind(this.$el);
+      this.emitter.off('viewportChange');
+      this.emitter._unbind();
+    }
+  };
 </script>
 
 <style scoped src="../common/style.css"></style>

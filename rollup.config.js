@@ -9,6 +9,7 @@ import { terser } from 'rollup-plugin-terser';
 import { uglify } from 'rollup-plugin-uglify';
 import svelte from 'rollup-plugin-svelte';
 import postcss from 'rollup-plugin-postcss';
+import autoPreprocess from 'svelte-preprocess'
 
 const env = argv.environment;
 const file = `docs/dist/image-masonry-${env}.js`;
@@ -62,7 +63,11 @@ if (env === 'react' || env === 'react-advanced') {
 if (env === 'svelte' || env === 'svelte-advanced') {
   input = `docs/src/svelte/${ env === 'svelte' ? 'basic' : 'advanced' }.js`;
   plugins.push(
-    svelte(),
+    svelte({
+      preprocess: autoPreprocess({
+
+      })
+    }),
     babel({
       presets: [ '@babel/preset-env'],
       extensions: ['.js', '.mjs', '.html', '.svelte' ]

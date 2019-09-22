@@ -1,0 +1,9 @@
+<img
+  *ngIf="isVisible"
+  class="lazy-image"
+  [class.is-loaded]="isLoaded"
+  (load)="onLoad()"
+  [attr.src]="src"
+  [attr.alt]="alt"
+  [attr.srcset]="srcset"
+/>

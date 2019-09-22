@@ -4,7 +4,6 @@
       <button class="btn btn-light btn-sm" type="button" @click="onChangeImages">Shuffle images</button>
       <button class="btn btn-light btn-sm" type="button" @click="onChangeRowHeight">Increase row height</button>
     </div>
-
     <image-masonry :images="images" :targetRowHeight="targetRowHeight" @image-click="onClick" ref="imageMasonry">
       <template v-slot="{image}">
         <div class="image-masonry-overlay">
@@ -55,9 +54,8 @@ export default {
           title
         }
       });
-      openPhotoSwipe(images, index, {
-        container: this.$refs.imageMasonry.$el,
-        selector: '.image-masonry-item'
+      openPhotoSwipe(images, index, (index) => {
+        return this.$el.querySelectorAll('[data-masonry-image]')[index];
       });
     }
   }

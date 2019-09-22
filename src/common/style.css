@@ -1,19 +1,48 @@
-.image-masonry {
-  box-sizing: border-box;
+.masonry-row {
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-wrap: wrap;
-  flex-wrap: wrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  justify-content: center;
+  width: 100%;
 }
 
-.image-masonry-item {
-  box-sizing: border-box;
+.masonry-row:last-child {
+  margin-right: 0 !important;
+}
+
+.masonry-item {
   position: relative;
-  padding: 1px
 }
 
-.image-masonry-item img {
+.masonry-item:last-child {
+  margin-right: 0 !important;
+  flex: 1;
+}
+
+.masonry-image {
   display: block;
   width: 100%;
   height: 100%;
 }
+
+.lazy-image-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: rgba(255, 255, 255, 0.1);
+  display: block;
+}
+
+.lazy-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 200ms ease-in-out;
+}
+
+.lazy-image.is-loaded {
+  opacity: 1;
+}
+

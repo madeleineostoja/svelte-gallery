@@ -22,7 +22,7 @@ function ImageDetails(image) {
 export default function () {
 
   const [images, setImages] = useState(sampleImages);
-  const [rowHeight, setRowHeight] = useState(200);
+  const [rowHeight, setRowHeight] = useState(220);
 
   const element = useRef(null);
 
@@ -47,9 +47,8 @@ export default function () {
         title
       }
     });
-    openPhotoSwipe(imgs, index, {
-      container: element.current,
-      selector: '.image-masonry-item'
+    openPhotoSwipe(imgs, index, (index) => {
+      return element.current.querySelectorAll('[data-masonry-image]')[index];
     });
   }
 

@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { BasicComponent } from './basic-example/basic.component';
 import { AdvancedComponent } from './advanced-example/advanced.component';
-import { ImageMasonryComponent } from '../../../src/angular/image-masonry.component';
+import { ImageMasonryModule } from '../../../src/angular/image-masonry.module';
 import { RouterModule, Routes } from '@angular/router';
 
 const appRoutes: Routes = [
@@ -16,10 +16,10 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     BasicComponent,
-    AdvancedComponent,
-    ImageMasonryComponent
+    AdvancedComponent
   ],
   imports: [
+    ImageMasonryModule,
     BrowserModule,
     RouterModule.forRoot(appRoutes, { useHash: true })
   ],

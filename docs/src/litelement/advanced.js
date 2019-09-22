@@ -11,6 +11,13 @@ function shuffleArray(array) {
   }
 }
 
+// get stylesheets to include
+const sheets = document.querySelectorAll('[data-include-in-shadow]');
+let styleImports = '';
+for (let i = 0; i < sheets.length; i++) {
+  styleImports += `@import "${sheets[i].href}";`
+}
+
 class ImageMasonryExample extends LitElement {
   static get properties() {
     return {
@@ -50,11 +57,12 @@ class ImageMasonryExample extends LitElement {
         title
       }
     });
-    openPhotoSwipe(images, detail.index, {
-      container: this.shadowRoot.querySelector('image-masonry').shadowRoot,
-      selector: '.image-masonry-item'
+    openPhotoSwipe(images, detail.index, (index) => {
+      const el = this.shadowRoot.querySelector('image-masonry').shadowRoot.querySelectorAll('lazy-image')[index].shadowRoot;
+      return el.querySelector('[data-masonry-image]');
     });
   }
+
 
   imageDetails(image) {
     return html `
@@ -66,6 +74,7 @@ class ImageMasonryExample extends LitElement {
 
   render() {
     return html `
+      <style>${styleImports}</style>
       <div class="pb-3 text-right">
         <button class="btn btn-light btn-sm" type="button" @click="${this.onChangeImagesClick}">Shuffle images</button>
         <button class="btn btn-light btn-sm" type="button" @click="${this.onChangeRowHeightClick}">Increase row height</button>

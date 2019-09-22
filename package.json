@@ -7,7 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
-    "server": "live-server --open=docs --watch=docs --ignore=docs/src",
+    "server": "live-server --wait=1000 --open=docs --watch=docs --ignore=docs/src",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint \"src/**/*.js\" \"tests/**/*.spec.js\"",
     "docs-vue": "rollup -w -c --environment vue",
@@ -57,6 +57,7 @@
     "rollup-plugin-vue": "^5.0.1",
     "styled-jsx": "^3.2.2",
     "svelte": "^3.12.1",
+    "svelte-preprocess": "^3.1.1",
     "typescript": "^3.6.2",
     "uglify-js": "3.6.0",
     "vue-template-compiler": "^2.6.10",
@@ -79,6 +80,7 @@
     "react-resize-detector": "^4.2.0",
     "rollup-plugin-multi-input": "^1.0.2",
     "systemjs": "^6.1.0",
+    "tiny-emitter": "^2.1.0",
     "zone.js": "^0.10.2"
   }
 }

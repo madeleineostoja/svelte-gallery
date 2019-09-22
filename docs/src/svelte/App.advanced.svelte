@@ -21,14 +21,14 @@
         title
       }
     });
-    openPhotoSwipe(imgs, event.detail.index, {
-      container: document.body,
-      selector: '.image-masonry-item'
+    openPhotoSwipe(imgs, event.detail.index, (index) => {
+      return element.querySelectorAll('[data-masonry-image]')[index];
     });
   }
 
+  let element;
   let images = sampleImages;
-  let targetRowHeight = 200;
+  let targetRowHeight = 220;
 
   function onChangeImages() {
     const newArray = [...sampleImages];
@@ -46,39 +46,13 @@
   <button class="btn btn-light btn-sm" type="button" on:click={onChangeImages}>Shuffle images</button>
   <button class="btn btn-light btn-sm" type="button" on:click={onChangeRowHeight}>Increase row height</button>
 </div>
-<ImageMasonry images={images} targetRowHeight={targetRowHeight} on:image-click={onClick} let:image={image}>
-  <div class="image-masonry-overlay">
-    <div class="image-masonry-text">{image.title}</div>
-  </div>
-</ImageMasonry>
+<div bind:this={element}>
+  <ImageMasonry images={images} targetRowHeight={targetRowHeight} on:image-click={onClick} let:image={image}>
+    <div class="image-masonry-overlay">
+      <div class="image-masonry-text">{image.title}</div>
+    </div>
+  </ImageMasonry>
+</div>
 
-<style>
-.image-masonry-overlay {
-  cursor: pointer;
-  display: flex;
-  display: -ms-flexbox;
-  align-items: flex-end;
-  position: absolute;
-  top: 0;
-  bottom: 1px;
-  left: 1px;
-  right: 1px;
-  opacity: 0;
-  transition: opacity 250ms linear;
-  background-image: linear-gradient(rgba(0,0,0,0) 75%,rgba(0,0,0,0.4));
-}
 
-.image-masonry-overlay:hover {
-  opacity: 1;
-}
-
-.image-masonry-text {
-  color: #fff;
-  font-weight: bold;
-  text-shadow: 0 0 2px #000;
-  padding: 4px 8px;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-</style>
+<style src="../image-details.css"></style>
