@@ -13,12 +13,23 @@ function cost(images, start, end, containerWidth, targetHeight, padding) {
   return Math.pow(Math.abs(rowHeight - targetHeight), 2);
 }
 
+function calcSeekLimit(containerWidth, targetRowHeight) {
+  if (containerWidth < 420) {
+    // limit to two nodes if the container is narrow
+    return 2;
+  }
+
+  // find how many 3/4 portrait pictures will fit in an ideal row
+  const count = ratio(containerWidth, targetRowHeight) / 0.75;
+  return Math.round(count * 1.5);
+}
+
 export default function({
   images,
   containerWidth,
   targetHeight,
   padding = 2,
-  seekLimit = 8,
+  seekLimit = calcSeekLimit,
   byRow = true
 } = {}) {
 
@@ -31,12 +42,14 @@ export default function({
     }
   });
 
+  const nodeSeekLimit = seekLimit(containerWidth, targetHeight);
+
   const graph = start => {
     const results = {};
     start = +start;
     results[start] = 0;
     for (let i = start + 1; i < _images.length + 1; ++i) {
-      if (i - start > seekLimit) {
+      if (i - start > nodeSeekLimit) {
         break;
       }
       results['' + i] = cost(_images, start, i, containerWidth, targetHeight, padding);
