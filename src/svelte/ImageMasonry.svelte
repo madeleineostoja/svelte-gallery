@@ -3,7 +3,6 @@
   import createLayout from '../common/justified-layout';
   import elementResizeEvent, { unbind } from 'element-resize-event';
   import LazyImage from './LazyImage.svelte';
-  import getEmitter from '../common/emitter';
 
   function makeStyle({ scaledWidth, scaledHeight }) {
     return `width:${scaledWidth}px; height:${scaledHeight}px; margin-right:${padding}px`;
@@ -27,7 +26,6 @@
   let element;
   let scaledImages = [];
   let width;
-  let emitter = getEmitter();
 
   // reactive statement
   $: if (width) {
@@ -57,7 +55,7 @@
     <div class="masonry-row" style="margin-bottom: {padding}px">
       {#each row as image (image.src)}
         <div class="masonry-item" style={makeStyle(image)} on:click={()=>onClick(image.index)}>
-          <LazyImage {...image} emitter={emitter} />
+          <LazyImage {...image} />
           <slot image={image}></slot>
         </div>
       {/each}

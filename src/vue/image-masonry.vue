@@ -11,7 +11,6 @@
       >
         <lazy-image
           class="masonry-image"
-          :emitter="emitter"
           :src="image.src"
           :alt="image.alt"
           :srcset="image.srcset"
@@ -29,7 +28,6 @@
   import createLayout from '../common/justified-layout';
   import elementResizeEvent, { unbind } from 'element-resize-event';
   import lazyImage from './lazy-image.vue';
-  import getEmitter from '../common/emitter';
 
   export default {
     props: {
@@ -49,8 +47,7 @@
     },
     data: () => ({
       scaledImages: [],
-      width: 0,
-      emitter: null
+      width: 0
     }),
     components: {
       lazyImage
@@ -67,9 +64,6 @@
         this.$emit('image-click', this.images[index], index, event);
       }
     },
-    created() {
-      this.emitter = getEmitter();
-    },
     mounted() {
       const process = () => {
         this.width = this.$el.getBoundingClientRect().width;
@@ -84,9 +78,6 @@
       elementResizeEvent(this.$el, () => {
         if (Math.round(this.width) !== Math.round(this.$el.getBoundingClientRect().width)) {
           process();
-          this.$nextTick(() => {
-            this.emitter.emit('viewportChange');
-          });
         }
       });
 
@@ -101,8 +92,6 @@
     },
     beforeDestroy() {
       unbind(this.$el);
-      this.emitter.off('viewportChange');
-      this.emitter._unbind();
     }
   };
 </script>
