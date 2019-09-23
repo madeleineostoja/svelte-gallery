@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
   import { cache } from './cache';
-  import { isInViewport } from '../common/utils';
+  import whenElementVisible from '../common/when-element-visible';
 
   function onLoad() {
     cache[src] = true;
@@ -12,7 +12,6 @@
   export let src = '';
   export let srcset = '';
   export let alt = '';
-  export let emitter = null;
 
   // state
   let element;
@@ -29,18 +28,13 @@
       return;
     }
 
-    const checkIsVisible = () => {
-      if (isInViewport(element)) {
-        emitter.off('viewportChange', checkIsVisible);
-        isVisible = true;
-      }
-    }
-    emitter.on('viewportChange', checkIsVisible);
-    checkIsVisible();
+    const disconnect = whenElementVisible(element, () => {
+      isVisible = true;
+    });
 
     return () => {
-      emitter.off('viewportChange', checkIsVisible);
-    };
+      disconnect();
+    }
   });
 </script>
 

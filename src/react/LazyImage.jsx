@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { isInViewport } from '../common/utils';
+import whenElementVisible from '../common/when-element-visible';
 import styles from '../common/style.css';
 
 const cache = {};
@@ -7,8 +7,7 @@ const cache = {};
 export default function LazyImage({
   src,
   srcset,
-  alt,
-  emitter
+  alt
 }) {
   const element = useRef(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -20,33 +19,18 @@ export default function LazyImage({
   }
 
   useEffect(() => {
-    window.emitter = emitter;
-
-    let _isVisible;
-    let _isLoaded;
-
     if (cache[src]) {
-      _isVisible = true;
-      _isLoaded = true;
-      setIsVisible(_isVisible);
-      setIsLoaded(_isLoaded);
-    }
-
-    if (_isLoaded) {
+      setIsVisible(true);
+      setIsLoaded(true);
       return;
     }
 
-    const checkIsVisible = () => {
-      if (isInViewport(element.current)) {
-        emitter.off('viewportChange', checkIsVisible);
-        setIsVisible(true);
-      }
-    }
-    emitter.on('viewportChange', checkIsVisible);
-    checkIsVisible();
+    const disconnect = whenElementVisible(element.current, () => {
+      setIsVisible(true);
+    });
 
     return () => {
-      emitter.off('viewportChange', checkIsVisible);
+      disconnect();
     }
 
   }, [src, srcset]);

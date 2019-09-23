@@ -1,7 +1,7 @@
 <div class="image-masonry">
   <div *ngFor="let row of scaledImages; trackBy:identify" class="masonry-row" [ngStyle]="{'margin-bottom' : padding + 'px'}">
     <div *ngFor="let image of row; trackBy:identify" class="masonry-item" [ngStyle]="makeStyle(image)" (click)="onClick(image.index, $event)">
-        <lazy-image [src]="image.src" [srcset]="image.srcset" [alt]="image.alt" [emitter]="emitter" ></lazy-image>
+        <lazy-image [src]="image.src" [srcset]="image.srcset" [alt]="image.alt"></lazy-image>
       <ng-container *ngTemplateOutlet="imageDetailsTmpl, context: { $implicit: image }"></ng-container>
     </div>
   </div>

@@ -3,7 +3,7 @@
     <img
       v-if="isVisible"
       class="lazy-image"
-      :class="{'is-loaded': isLoaded}"
+      :class="{'is-loaded': isLoaded, 'is-instant': isInstant}"
       @load="onLoad()"
       :src="src"
       :alt="alt"
@@ -13,20 +13,19 @@
 </template>
 
 <script>
-import { isInViewport } from '../common/utils';
-
+import whenElementVisible from '../common/when-element-visible';
 const cache = {};
 
 export default {
   props: {
     src: String,
     alt: String,
-    srcset: String,
-    emitter: null
+    srcset: String
   },
   data: () => ({
     isLoaded: false,
-    isVisible: false
+    isVisible: false,
+    isInstant: false
   }),
   created() {
     if(cache[this.src]) {
@@ -38,19 +37,14 @@ export default {
     if (this.isLoaded) {
       return;
     }
-
-    const checkIsVisible = () => {
-      if (isInViewport(this.$el)) {
-        this.emitter.off('viewportChange', checkIsVisible);
-        this.isVisible = true;
-      }
-    }
-    this.emitter.on('viewportChange', checkIsVisible);
-    this._lazy_image_check = checkIsVisible;
-    checkIsVisible();
+    this._observer_disconnect = whenElementVisible(this.$el, ({ isVisibleOnInit }) => {
+      //this.isInstant = isVisibleOnInit; // disable animation on initially visible elements
+      this.isVisible = true;
+    });
   },
   destroyed() {
-    this.emitter.off('viewportChange', this._lazy_image_check);
+    this._observer_disconnect && this._observer_disconnect();
+
   },
   methods: {
     onLoad() {

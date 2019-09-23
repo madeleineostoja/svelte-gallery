@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, OnChanges, OnDestroy, ElementRef, ChangeDetectorRef, SimpleChanges, ContentChild, TemplateRef, EventEmitter, Output } from '@angular/core';
 import createLayout from '../common/justified-layout.js';
 import elementResizeEvent, { unbind } from 'element-resize-event';
-import getEmitter from '../common/emitter';
 
 @Component({
   selector: 'image-masonry',
@@ -18,14 +17,12 @@ export class ImageMasonryComponent implements OnInit, OnChanges, OnDestroy {
 
   scaledImages = [];
   width = 0;
-  emitter = getEmitter();
 
   ngOnInit() {
     const el = this.elementRef.nativeElement;
     elementResizeEvent(this.elementRef.nativeElement, () => {
       if (Math.round(this.width) !== Math.round(el.getBoundingClientRect().width)) {
         this.process();
-        this.emitter.emit('viewportChange');
         this.changeDetectorRef.detectChanges();
       }
     });

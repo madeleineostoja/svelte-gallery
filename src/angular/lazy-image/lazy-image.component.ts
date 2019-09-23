@@ -1,5 +1,5 @@
 import { Component, AfterContentInit, Input, ElementRef, ChangeDetectorRef } from '@angular/core';
-import { isInViewport } from '../../common/utils';
+import whenElementVisible from '../../common/when-element-visible';
 
 const cache = {};
 
@@ -15,11 +15,10 @@ export class LazyImageComponent implements AfterContentInit {
   @Input() src: string;
   @Input() srcset: string;
   @Input() alt: string;
-  @Input() emitter: object;
 
   isLoaded = false;
   isVisible = false;
-  _lazy_image_check = null;
+  _observer_disconnect = null;
 
   onLoad() {
     cache[this.src] = true;
@@ -37,19 +36,13 @@ export class LazyImageComponent implements AfterContentInit {
       return;
     }
 
-    const checkIsVisible = () => {
-      if (isInViewport(this.elementRef.nativeElement)) {
-        this.emitter.off('viewportChange', checkIsVisible);
-        this.isVisible = true;
-      }
-    }
-    this.emitter.on('viewportChange', checkIsVisible);
-    checkIsVisible();
-    this._lazy_image_check = checkIsVisible;
+    this._observer_disconnect = whenElementVisible(this.elementRef.nativeElement, () => {
+      this.isVisible = true;
+      this.changeDetectorRef.detectChanges();
+    });
   }
 
   ngOnDestroy() {
-    this.emitter.off('viewportChange', this._lazy_image_check);
+    this._observer_disconnect && this._observer_disconnect();
   }
-
 }

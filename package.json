@@ -80,7 +80,6 @@
     "react-resize-detector": "^4.2.0",
     "rollup-plugin-multi-input": "^1.0.2",
     "systemjs": "^6.1.0",
-    "tiny-emitter": "^2.1.0",
     "zone.js": "^0.10.2"
   }
 }

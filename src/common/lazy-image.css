@@ -17,3 +17,8 @@
 .lazy-image.is-loaded {
   opacity: 1;
 }
+
+.lazy-image.is-instant {
+  opacity: 1;
+  transition: none;
+}

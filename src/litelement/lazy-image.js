@@ -1,5 +1,5 @@
 import { LitElement, html, css, unsafeCSS } from 'lit-element';
-import { isInViewport } from '../common/utils';
+import whenElementVisible from '../common/when-element-visible';
 import styles from '../common/lazy-image.css';
 
 const cache = {};
@@ -10,7 +10,6 @@ class LazyImage extends LitElement {
       src: { type: String },
       srcset: { type: String },
       alt: { type: String },
-      emitter: { type: Object },
       isLoaded: { type: Boolean },
       isVisible: { type: Boolean }
     };
@@ -40,7 +39,6 @@ class LazyImage extends LitElement {
   }
 
   firstUpdated() {
-    window.emitter = this.emitter;
     if (cache[this.src]) {
       this.isLoaded = true;
       this.isVisible = true;
@@ -50,15 +48,9 @@ class LazyImage extends LitElement {
       return;
     }
 
-    const checkIsVisible = () => {
-      if (isInViewport(this)) {
-        this.emitter.off('viewportChange', checkIsVisible);
-        this.isVisible = true;
-      }
-    }
-    this.emitter.on('viewportChange', checkIsVisible);
-    this._lazy_image_check = checkIsVisible;
-    checkIsVisible();
+    this._observer_disconnect = whenElementVisible(this, () => {
+      this.isVisible = true;
+    });
   }
 
   render() {
@@ -82,7 +74,7 @@ class LazyImage extends LitElement {
   }
 
   disconnectedCallback() {
-    this.emitter.off('viewportChange', this._lazy_image_check);
+    this._observer_disconnect && this._observer_disconnect();
     super.disconnectedCallback();
   }
 }
