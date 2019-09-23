@@ -60,6 +60,7 @@ body {
 .masthead-brand {
   margin-bottom: 0;
   font-size: 1.2em;
+  padding-top: .25rem;
 }
 
 .nav-masthead .nav-link {
@@ -86,13 +87,19 @@ body {
 
 .cover-heading {
   font-size: 1.8rem;
+  padding-top: 1rem;
 }
 
-@media (min-width: 48em) {
+@media (min-width: 30em) {
   .masthead-brand {
     float: left;
   }
+
   .nav-masthead {
     float: right;
+  }
+
+  .cover-heading {
+    padding-top: 3rem;
   }
 }
