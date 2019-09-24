@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnChanges, OnDestroy, ElementRef, ChangeDetectorRef, SimpleChanges, ContentChild, TemplateRef, EventEmitter, Output } from '@angular/core';
 import createLayout from '../common/justified-layout.js';
 import elementResizeEvent, { unbind } from 'element-resize-event';
+import { debounce } from '../common/utils';
 
 @Component({
   selector: 'image-masonry',
@@ -17,13 +18,20 @@ export class ImageMasonryComponent implements OnInit, OnChanges, OnDestroy {
 
   scaledImages = [];
   width = 0;
+  isResizing = false;
 
   ngOnInit() {
-    const el = this.elementRef.nativeElement;
-    elementResizeEvent(this.elementRef.nativeElement, () => {
+    const el = this.elementRef.nativeElement.querySelector('[data-resizer]');
+    const resizedFinished = debounce(() => {
+      this.isResizing = false;
+      this.changeDetectorRef.detectChanges();
+    }, 100);
+    elementResizeEvent(el, () => {
       if (Math.round(this.width) !== Math.round(el.getBoundingClientRect().width)) {
+        this.isResizing = true;
         this.process();
         this.changeDetectorRef.detectChanges();
+        resizedFinished();
       }
     });
   }
@@ -48,11 +56,19 @@ export class ImageMasonryComponent implements OnInit, OnChanges, OnDestroy {
     })
   }
 
-  makeStyle({ scaledWidth, scaledHeight }) {
+  makeStyle({ scaledWidth, scaledHeight, isLastInRow, isLastRow }) {
+    let mr = this.padding + 'px';
+    const mb = isLastRow ? '0' : mr;
+    let flex = `0 0 ${scaledWidth}px`;
+    if (isLastInRow) {
+      mr = '0';
+      flex = `1 1 ${scaledWidth-4}px`;
+    }
     return {
-      width: scaledWidth + 'px',
       height: scaledHeight + 'px',
-      'margin-right': this.padding + 'px'
+      flex: flex,
+      'margin-right': mr,
+      'margin-bottom': mb
     }
   }
 
@@ -65,10 +81,6 @@ export class ImageMasonryComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   identify(index, item) {
-    if(item instanceof Array) {
-      return index;
-    } else {
-      return item.src;
-    }
+    return item.src;
   }
 }

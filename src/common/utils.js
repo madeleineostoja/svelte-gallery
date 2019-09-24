@@ -17,3 +17,15 @@ export function scaleHeight(width, ratio) {
 export function scaleWidth(height, ratio) {
   return round(height * ratio);
 }
+
+export function debounce (fn, delay) {
+  let timeoutID = null
+  return function () {
+    clearTimeout(timeoutID)
+    const args = arguments
+    const that = this
+    timeoutID = setTimeout(function () {
+      fn.apply(that, args)
+    }, delay)
+  }
+}

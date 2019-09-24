@@ -1,23 +1,20 @@
-.masonry-row {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-  justify-content: center;
-  width: 100%;
+.image-masonry {
+  max-width: 100%;
 }
 
-.masonry-row:last-child {
-  margin-right: 0 !important;
+.image-masonry.is-resizing {
+  overflow: hidden;
+}
+
+.image-masonry-container {
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
 .masonry-item {
   position: relative;
-}
-
-.masonry-item:last-child {
-  margin-right: 0 !important;
-  flex: 1;
 }
 
 .masonry-image {
@@ -45,4 +42,3 @@
 .lazy-image.is-loaded {
   opacity: 1;
 }
-

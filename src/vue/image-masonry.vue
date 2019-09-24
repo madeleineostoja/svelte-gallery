@@ -1,9 +1,9 @@
 <template>
-  <div class="image-masonry">
-
-    <div class="masonry-row" v-for="(row, index) in scaledImages" :key="index" :style="{'margin-bottom' : padding + 'px'}" >
+  <div class="image-masonry" :class="{'is-resizing': isResizing}">
+    <div data-resizer></div>
+    <div class="image-masonry-container" :style="{'width': width + 'px'}">
       <div
-        v-for="image in row"
+        v-for="image in scaledImages"
         :key="image.src"
         class="masonry-item"
         :style="makeStyle(image)"
@@ -14,13 +14,10 @@
           :src="image.src"
           :alt="image.alt"
           :srcset="image.srcset"
-          v-if="true"
         />
-        <img :key="image.src" v-else class="image" data-masonry-image :src="image.src" :alt="image.alt" :srcset="image.srcset" >
         <slot :image="image" :index="index"></slot>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -28,6 +25,7 @@
   import createLayout from '../common/justified-layout';
   import elementResizeEvent, { unbind } from 'element-resize-event';
   import lazyImage from './lazy-image.vue';
+  import { debounce } from '../common/utils';
 
   export default {
     props: {
@@ -47,18 +45,27 @@
     },
     data: () => ({
       scaledImages: [],
-      width: 0
+      width: 0,
+      isResizing: false
     }),
     components: {
       lazyImage
     },
     methods: {
-      makeStyle({ scaledHeight, scaledWidth }) {
+      makeStyle({ scaledHeight, scaledWidth, isLastInRow, isLastRow }) {
+        let mr = this.padding + 'px';
+        const mb = isLastRow ? '0' : mr;
+        let flex = `0 0 ${scaledWidth}px`;
+        if (isLastInRow) {
+          mr = '0';
+          flex = `1 1 ${scaledWidth-4}px`;
+        }
         return {
-          width: scaledWidth + 'px',
           height: scaledHeight + 'px',
-          'margin-right': this.padding + 'px'
-        };
+          flex: flex,
+          'margin-right': mr,
+          'margin-bottom': mb
+        }
       },
       onClick(index, event) {
         this.$emit('image-click', this.images[index], index, event);
@@ -75,9 +82,16 @@
         });
       };
 
-      elementResizeEvent(this.$el, () => {
-        if (Math.round(this.width) !== Math.round(this.$el.getBoundingClientRect().width)) {
+      const el = this.$el.querySelector('[data-resizer]');
+      const resizedFinished = debounce(() => {
+        this.isResizing = false;
+      }, 100);
+
+      elementResizeEvent(el, () => {
+        if (Math.round(this.width) !== Math.round(el.getBoundingClientRect().width)) {
+          this.isResizing = true;
           process();
+          resizedFinished();
         }
       });
 

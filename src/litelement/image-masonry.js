@@ -1,6 +1,7 @@
 import { LitElement, html, css, unsafeCSS } from 'lit-element';
 import createLayout from '../common/justified-layout';
 import elementResizeEvent, { unbind } from 'element-resize-event';
+import { debounce } from '../common/utils';
 import './lazy-image';
 import styles from '../common/style.css';
 
@@ -13,7 +14,8 @@ class ImageMasonry extends LitElement {
       padding: { type: Number },
       targetRowHeight: { type: Number },
       imageTemplate: { type: Function },
-      imageStyle: { type: String }
+      imageStyle: { type: String },
+      isResizing: { type: Boolean }
     };
   }
 
@@ -23,6 +25,7 @@ class ImageMasonry extends LitElement {
     this.width = 0;
     this.targetRowHeight = 220;
     this.padding = 4;
+    this.isResizing = false;
   }
 
   static get styles() {
@@ -44,9 +47,15 @@ class ImageMasonry extends LitElement {
         padding: this.padding
       });
     }
-    elementResizeEvent(this.shadowRoot.querySelector('.image-masonry'), () => {
-      if (Math.round(this.width) !== Math.round(this.getBoundingClientRect().width)) {
+    const el = this.shadowRoot.querySelector('[data-resizer]');
+    const resizedFinished = debounce(() => {
+      this.isResizing = false;
+    }, 100);
+    elementResizeEvent(el, () => {
+      if (Math.round(this.width) !== Math.round(el.getBoundingClientRect().width)) {
+        this.isResizing = true;
         process();
+        resizedFinished();
       }
     });
     process();
@@ -63,8 +72,15 @@ class ImageMasonry extends LitElement {
     }
   }
 
-  makeStyle({ scaledWidth, scaledHeight }) {
-    return `width:${scaledWidth}px; height:${scaledHeight}px;margin-right:${this.padding}px`
+  makeStyle({ scaledWidth, scaledHeight, isLastRow, isLastInRow }) {
+    let mr = this.padding + 'px';
+    const mb = isLastRow ? '0' : mr;
+    let flex = `0 0 ${scaledWidth}px`;
+    if (isLastInRow) {
+      mr = '0';
+      flex = `1 1 ${scaledWidth-4}px`;
+    }
+    return `height:${scaledHeight}px; flex: ${flex}; margin-right:${mr}; margin-bottom: ${mb}`;
   }
 
   handleClick(index, event) {
@@ -79,21 +95,20 @@ class ImageMasonry extends LitElement {
   }
 
   render() {
-    const rowStyle = `margin-bottom: ${this.padding}px`;
+    const containerStyle = `width: ${this.width}px`;
 
     return html `
       ${this.imageStyle ?  html`<style>${this.imageStyle}</style>` : ''}
-      <div class="image-masonry">
-        ${this.scaledImages.map(row => html`
-          <div class="masonry-row" style="${rowStyle}">
-          ${row.map(image => html`
-            <div class="masonry-item" style="${this.makeStyle(image)}" @click="${e => this.handleClick(image.index, e)}">
-              <lazy-image .src="${image.src}" .srcset="${image.srcset}" .alt="${image.alt}"></lazy-image>
-              ${this.imageTemplate && this.imageTemplate(image)}
-            </div>
-          `)}
+      <div class="image-masonry ${this.isResizing ? 'is-resizing' : ''}">
+        <div data-resizer></div>
+        <div class="image-masonry-container" style="${containerStyle}">
+        ${this.scaledImages.map(image => html`
+          <div class="masonry-item" style="${this.makeStyle(image)}" @click="${e => this.handleClick(image.index, e)}">
+            <lazy-image .src="${image.src}" .srcset="${image.srcset}" .alt="${image.alt}"></lazy-image>
+            ${this.imageTemplate && this.imageTemplate(image)}
           </div>
         `)}
+        </div>
       </div>
     `;
   }

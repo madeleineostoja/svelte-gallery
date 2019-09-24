@@ -9,12 +9,20 @@ export default function ImageMasonry({
   emitter
 }) {
 
-  const { scaledWidth, scaledHeight, index } = image;
+  const { scaledWidth, scaledHeight, isLastInRow, isLastRow, index } = image;
 
+  let mr = padding + 'px';
+  const mb = isLastRow ? '0' : mr;
+  let flex = `0 0 ${scaledWidth}px`;
+  if (isLastInRow) {
+    mr = '0';
+    flex = `1 1 ${scaledWidth-4}px`;
+  }
   const style = {
-    width: scaledWidth + 'px',
     height: scaledHeight + 'px',
-    marginRight: padding + 'px'
+    flex: flex,
+    marginRight: mr,
+    marginBottom: mb
   }
 
   const handleClick = event => {

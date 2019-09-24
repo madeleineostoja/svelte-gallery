@@ -30,7 +30,7 @@ export default function({
   targetHeight,
   padding = 2,
   seekLimit = calcSeekLimit,
-  byRow = true
+  byRow = false
 } = {}) {
 
   // clone the images, and set ratio and initial scaled width / height
@@ -64,12 +64,20 @@ export default function({
   for (let i = 0; i < path.length; i++) {
     if (path[i + 1]) {
       const row = _images.slice(+path[i], +path[i + 1]);
+      const isLastRow = (i === path.length-2);
+
       // scale row
       const rowHeight = getRowHeight(row, containerWidth, padding);
-      row.forEach(image => {
+      row.forEach((image, index) => {
         image.scaledWidth = scaleWidth(rowHeight, image.ratio); //.toFixed(1);
         image.scaledHeight = rowHeight;
         image.scaledWidthPc = round((image.scaledWidth / containerWidth) * 100);
+
+        if (index === row.length-1) {
+          image.isLastInRow = true;
+        }
+        image.isLastRow = isLastRow;
+
         scaledImages.push(image);
       });
       rows.push(row);

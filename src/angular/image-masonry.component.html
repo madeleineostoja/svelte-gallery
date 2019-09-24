@@ -1,7 +1,8 @@
-<div class="image-masonry">
-  <div *ngFor="let row of scaledImages; trackBy:identify" class="masonry-row" [ngStyle]="{'margin-bottom' : padding + 'px'}">
-    <div *ngFor="let image of row; trackBy:identify" class="masonry-item" [ngStyle]="makeStyle(image)" (click)="onClick(image.index, $event)">
-        <lazy-image [src]="image.src" [srcset]="image.srcset" [alt]="image.alt"></lazy-image>
+<div class="image-masonry" [class.is-resizing]="isResizing">
+  <div data-resizer></div>
+  <div class="image-masonry-container" [ngStyle]="{'width' : width + 'px'}">
+    <div *ngFor="let image of scaledImages; trackBy:identify" class="masonry-item" [ngStyle]="makeStyle(image)" (click)="onClick(image.index, $event)">
+      <lazy-image [src]="image.src" [srcset]="image.srcset" [alt]="image.alt"></lazy-image>
       <ng-container *ngTemplateOutlet="imageDetailsTmpl, context: { $implicit: image }"></ng-container>
     </div>
   </div>
