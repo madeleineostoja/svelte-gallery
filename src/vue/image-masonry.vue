@@ -9,13 +9,13 @@
         :style="makeStyle(image)"
         @click="onClick(image.index, $event)"
       >
+        <slot :image="image" :index="index"></slot>
         <lazy-image
           class="masonry-image"
           :src="image.src"
           :alt="image.alt"
           :srcset="image.srcset"
         />
-        <slot :image="image" :index="index"></slot>
       </div>
     </div>
   </div>
