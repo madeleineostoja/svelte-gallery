@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import whenElementVisible from '../common/when-element-visible';
-import styles from '../common/style.css';
+import styles from '../common/lazy-image.less';
 
 const cache = {};
 
@@ -49,7 +49,7 @@ export default function LazyImage({
     )
   }
   return (
-    <div data-masonry-image ref={element} className={styles['lazy-image-container']}>
+    <div data-masonry-image ref={element} className={styles['lazy-image-container'] + ' ' + (isLoaded ? styles['is-loaded'] : '')}>
       {img}
     </div>
   )
