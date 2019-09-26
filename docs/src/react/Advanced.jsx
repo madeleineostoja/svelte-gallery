@@ -1,42 +1,43 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import ImageMasonry from '../../../src/react/ImageMasonry.jsx';
+import ImageOverlay from './components/ImageOverlay.jsx';
 import sampleImages from '../images-advanced';
 import openPhotoSwipe from '../photoswipe';
-import styles from '../image-details.css';
-
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
-
-function ImageDetails(image) {
-  return (
-    <div className={styles['image-masonry-overlay']}>
-      <div className={styles['image-masonry-text']}>{image.title}</div>
-    </div>
-  )
-}
+import { shuffleArray } from '../utils';
 
 export default function () {
 
   const [images, setImages] = useState(sampleImages);
   const [rowHeight, setRowHeight] = useState(220);
+  const [isSelecting, setIsSelecting] = useState(false);
+  const [selectedImages, setSelectedImages] = useState([]);
+
 
   const element = useRef(null);
 
   const handleChangeImagesClick = () => {
-    const newArray = [...images];
-    shuffleArray(newArray);
-    setImages(newArray);
+    setImages(shuffleArray(images));
   }
 
   const handleChangeRowHeightClick = () => {
     setRowHeight(rowHeight + 50);
   }
 
-  const handleImageClick = (image, index) => {
+  const handleSelectChange = (value, index) => {
+    if (value) {
+      setSelectedImages([...selectedImages, images[index]]);
+    } else {
+      const removeIndex = selectedImages.indexOf(images[index]);
+      selectedImages.splice(removeIndex, 1);
+      setSelectedImages([...selectedImages]);
+    }
+  }
+
+  useEffect(() => {
+    setIsSelecting(!!selectedImages.length);
+  }, [selectedImages]);
+
+  const handleImageView = (index) => {
     // create array compatible with PhotoSwipe
     const imgs = images.map(({ src, width, height, original, title }) => {
       return {
@@ -48,7 +49,7 @@ export default function () {
       }
     });
     openPhotoSwipe(imgs, index, (index) => {
-      return element.current.querySelectorAll('[data-masonry-image]')[index];
+      return element.current.querySelectorAll('[data-masonry-image]')[index].querySelector('img');
     });
   }
 
@@ -59,7 +60,9 @@ export default function () {
         <button className="btn btn-light btn-sm" type="button" onClick={handleChangeRowHeightClick}>Increase row height</button>
       </div>
       <div ref={element}>
-        <ImageMasonry images={images} targetRowHeight={rowHeight} render={ImageDetails} onImageClick={handleImageClick} />
+        <ImageMasonry images={images} targetRowHeight={rowHeight} render={image => (
+          <ImageOverlay image={image} selectMode={isSelecting} onSelectChange={handleSelectChange} onView={handleImageView} />
+        )}/>
       </div>
     </div>
   )

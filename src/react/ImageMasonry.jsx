@@ -3,7 +3,7 @@ import ReactResizeDetector from 'react-resize-detector';
 import MasonryItem from './MasonryItem.jsx';
 import createLayout from '../common/justified-layout';
 import { debounce } from '../common/utils';
-import styles from '../common/style.css';
+import styles from '../common/image-masonry.less';
 
 export default function ImageMasonry({
   images,

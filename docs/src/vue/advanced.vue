@@ -4,11 +4,19 @@
       <button class="btn btn-light btn-sm" type="button" @click="onChangeImages">Shuffle images</button>
       <button class="btn btn-light btn-sm" type="button" @click="onChangeRowHeight">Increase row height</button>
     </div>
-    <image-masonry :images="images" :targetRowHeight="targetRowHeight" @image-click="onClick" ref="imageMasonry">
+
+    <!-- <p v-if="selectedImages.length">
+      Selected {{selectedImages.length}} of {{images.length}}
+    </p> -->
+
+    <image-masonry :images="images" :targetRowHeight="targetRowHeight">
       <template v-slot="{image}">
-        <div class="image-masonry-overlay">
-          <div class="image-masonry-text">{{image.title}}</div>
-        </div>
+        <image-overlay
+          :image="image"
+          :select-mode="isSelecting"
+          @select-change="onSelect"
+          @view="onOpen"
+        />
       </template>
     </image-masonry>
   </div>
@@ -17,33 +25,39 @@
 <script>
 import sampleImages from '../images-advanced';
 import imageMasonry from '../../../src/vue/image-masonry.vue';
+import imageOverlay from './components/image-overlay.vue';
 import openPhotoSwipe from '../photoswipe';
-
-function shuffleArray(array) {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-}
+import { shuffleArray } from '../utils';
 
 export default {
   data: () => ({
     images: sampleImages,
-    targetRowHeight: 220
+    targetRowHeight: 220,
+    isSelecting: false,
+    selectedImages: []
   }),
   components: {
-    imageMasonry
+    imageMasonry,
+    imageOverlay
   },
   methods: {
     onChangeImages() {
-      const newArray = [...sampleImages];
-      shuffleArray(newArray);
-      this.images = newArray;
+      this.images = shuffleArray(this.images);
     },
     onChangeRowHeight() {
-      this.targetRowHeight = this.targetRowHeight + 50
+      this.targetRowHeight = this.targetRowHeight + 50;
     },
-    onClick(image, index) {
+    onSelect(value, index) {
+      if (value) {
+        this.selectedImages.push(this.images[index]);
+      } else {
+        const removeIndex = this.selectedImages.indexOf(this.images[index]);
+        this.selectedImages.splice(removeIndex, 1);
+      }
+
+      this.isSelecting = !!this.selectedImages.length;
+    },
+    onOpen(image) {
       // create array compatible with PhotoSwipe
       const images = this.images.map(({ src, width, height, original, title }) => {
         return {
@@ -54,12 +68,10 @@ export default {
           title
         }
       });
-      openPhotoSwipe(images, index, (index) => {
-        return this.$el.querySelectorAll('[data-masonry-image]')[index];
+      openPhotoSwipe(images, image.index, (index) => {
+        return this.$el.querySelectorAll('[data-masonry-image]')[index].querySelector('img');
       });
     }
   }
 }
 </script>
-
-<style src="../image-details.css"></style>

@@ -9,7 +9,8 @@ import { terser } from 'rollup-plugin-terser';
 import { uglify } from 'rollup-plugin-uglify';
 import svelte from 'rollup-plugin-svelte';
 import postcss from 'rollup-plugin-postcss';
-import autoPreprocess from 'svelte-preprocess'
+import autoPreprocess from 'svelte-preprocess';
+import svg from 'rollup-plugin-svg';
 
 const env = argv.environment;
 const file = `docs/dist/image-masonry-${env}.js`;
@@ -25,6 +26,7 @@ let input = '';
 if (env === 'vue' || env === 'vue-advanced') {
   input = `docs/src/vue/${ env === 'vue' ? 'basic' : 'advanced' }.vue`;
   plugins.push(
+    svg(),
     vue({
       needMap: false,
       compileTemplate: true,
