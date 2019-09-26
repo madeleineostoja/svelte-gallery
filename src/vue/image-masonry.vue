@@ -11,7 +11,6 @@
       >
         <slot :image="image" :index="index"></slot>
         <lazy-image
-          class="masonry-image"
           :src="image.src"
           :alt="image.alt"
           :srcset="image.srcset"
@@ -110,4 +109,4 @@
   };
 </script>
 
-<style scoped src="../common/style.css"></style>
+<style scoped lang="less" src="../common/image-masonry.less"></style>

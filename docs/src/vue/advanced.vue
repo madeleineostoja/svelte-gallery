@@ -48,7 +48,7 @@ export default {
       this.targetRowHeight = this.targetRowHeight + 50;
     },
     onSelect(value, index) {
-      if(value) {
+      if (value) {
         this.selectedImages.push(this.images[index]);
       } else {
         const removeIndex = this.selectedImages.indexOf(this.images[index]);
@@ -75,5 +75,3 @@ export default {
   }
 }
 </script>
-
-<style src="../image-details.css"></style>

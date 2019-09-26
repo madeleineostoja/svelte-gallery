@@ -14,7 +14,7 @@
       :label="image.title"
     />
     <!-- <div class="image-text">{{image.title}}</div> -->
-    <button @click.stop="onMagnifyClick" class="image-magnify" v-html="svg"></button>
+    <button type="button" @click.stop="onMagnifyClick" class="image-magnify" v-html="svg"></button>
   </div>
 </template>
 

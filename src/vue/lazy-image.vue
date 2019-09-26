@@ -55,4 +55,4 @@ export default {
 };
 </script>
 
-<style scoped src="../common/lazy-image.css"></style>
+<style scoped lang="less" src="../common/lazy-image.less"></style>
