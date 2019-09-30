@@ -60,6 +60,7 @@
     "styled-jsx": "^3.2.2",
     "svelte": "^3.12.1",
     "svelte-preprocess": "^3.1.1",
+    "svelte-preprocess-less": "^0.4.0",
     "typescript": "^3.6.2",
     "uglify-js": "3.6.0",
     "vue-template-compiler": "^2.6.10",

@@ -1,6 +1,6 @@
 import { LitElement, html, css, unsafeCSS } from 'lit-element';
 import whenElementVisible from '../common/when-element-visible';
-import styles from '../common/lazy-image.css';
+import styles from './style.less';
 
 const cache = {};
 
@@ -58,7 +58,7 @@ class LazyImage extends LitElement {
     const alt = this.alt || '';
     const img = html`
       <img
-      class="lazy-image ${this.isLoaded ? 'is-loaded' : ''}"=
+      class="image ${this.isLoaded ? 'is-loaded' : ''}"=
       src="${this.src}"
       srcset="${srcset}"
       alt="${alt}"
@@ -67,7 +67,7 @@ class LazyImage extends LitElement {
     `;
 
     return html `
-      <div data-masonry-image class="lazy-image-container ${this.isLoaded ? 'is-loaded' : ''}">
+      <div data-masonry-image class="image-container ${this.isLoaded ? 'is-loaded' : ''}">
         ${this.isVisible ? img : ''}
       </div>
     `;

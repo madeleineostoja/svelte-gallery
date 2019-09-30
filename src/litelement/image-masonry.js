@@ -3,7 +3,7 @@ import createLayout from '../common/justified-layout';
 import elementResizeEvent, { unbind } from 'element-resize-event';
 import { debounce } from '../common/utils';
 import './lazy-image';
-import styles from '../common/style.css';
+import styles from './style.less';
 
 class ImageMasonry extends LitElement {
   static get properties() {
@@ -99,11 +99,11 @@ class ImageMasonry extends LitElement {
 
     return html `
       ${this.imageStyle ?  html`<style>${this.imageStyle}</style>` : ''}
-      <div class="image-masonry ${this.isResizing ? 'is-resizing' : ''}">
+      <div class="masonry ${this.isResizing ? 'is-resizing' : ''}">
         <div data-resizer></div>
-        <div class="image-masonry-container" style="${containerStyle}">
+        <div class="container" style="${containerStyle}">
         ${this.scaledImages.map(image => html`
-          <div class="masonry-item" style="${this.makeStyle(image)}" @click="${e => this.handleClick(image.index, e)}">
+          <div class="item" style="${this.makeStyle(image)}" @click="${e => this.handleClick(image.index, e)}">
             <lazy-image .src="${image.src}" .srcset="${image.srcset}" .alt="${image.alt}"></lazy-image>
             ${this.imageTemplate && this.imageTemplate(image)}
           </div>
@@ -114,7 +114,7 @@ class ImageMasonry extends LitElement {
   }
 
   disconnectedCallback() {
-    const el = this.shadowRoot.querySelector('.image-masonry');
+    const el = this.shadowRoot.querySelector('.masonry');
     if (el) {
       unbind(el);
     }

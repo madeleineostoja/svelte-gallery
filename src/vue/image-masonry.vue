@@ -109,4 +109,18 @@
   };
 </script>
 
-<style scoped lang="less" src="../common/image-masonry.less"></style>
+<style scoped lang="less">
+  @import '../style/image-masonry.mixin.less';
+
+  .image-masonry {
+    .image-masonry
+  }
+
+  .image-masonry-container {
+    .image-masonry-container
+  }
+
+  .masonry-item {
+    .masonry-item
+  }
+</style>

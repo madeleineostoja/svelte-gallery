@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import styles from '../../less/checkbox.less';
+import styles from '../../style/checkbox.less';
 
 export default function Checkbox({
   label,

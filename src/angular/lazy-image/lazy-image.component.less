@@ -1,24 +1,9 @@
+@import 'src/style/lazy-image.mixin.less';
+
 :host {
-  width: 100%;
-  height: 100%;
-  position: relative;
-  display: block;
-
-  transition: opacity 300ms ease-in-out;
-  opacity: 0;
-
-  &.is-loaded {
-    opacity: 1;
-  }
-
-  .is-instant {
-    opacity: 1;
-    transition: none;
-  }
+  .lazy-image-container
 }
 
 .lazy-image {
-  display: block;
-  width: 100%;
-  height: 100%;
+  .lazy-image
 }

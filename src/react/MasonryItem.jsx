@@ -1,5 +1,5 @@
 import LazyImage from './LazyImage.jsx';
-import styles from '../common/image-masonry.less';
+import cn from './style/classNames';
 
 export default function ImageMasonry({
   image,
@@ -30,7 +30,7 @@ export default function ImageMasonry({
   }
 
   return (
-    <div style={style} onClick={handleClick} value={image.index} className={styles['masonry-item']}>
+    <div style={style} onClick={handleClick} value={image.index} className={cn.item}>
       {render && render(image)}
       <LazyImage
         {...image}

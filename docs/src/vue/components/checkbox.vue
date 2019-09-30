@@ -44,4 +44,4 @@ export default {
 };
 </script>
 
-<style lang="less" src="../../less/checkbox.less"></style>
+<style lang="less" src="../../style/checkbox.less"></style>

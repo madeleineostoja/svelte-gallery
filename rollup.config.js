@@ -10,6 +10,7 @@ import { uglify } from 'rollup-plugin-uglify';
 import svelte from 'rollup-plugin-svelte';
 import postcss from 'rollup-plugin-postcss';
 import autoPreprocess from 'svelte-preprocess';
+import { less as svelteLess } from 'svelte-preprocess-less';
 import svg from 'rollup-plugin-svg';
 import less from 'less';
 
@@ -79,9 +80,16 @@ if (env === 'svelte' || env === 'svelte-advanced') {
   input = `docs/src/svelte/${ env === 'svelte' ? 'basic' : 'advanced' }.js`;
   plugins.push(
     svelte({
-      preprocess: autoPreprocess({
+      preprocess: {
+        style: svelteLess()
+        // style: ({ content }) => {
+        //   console.log('contnet', content)
+        //   return less.render(content);
+        // }
+      }
+      // preprocess: autoPreprocess({
 
-      })
+      // })
     }),
     babel({
       presets: [ '@babel/preset-env'],

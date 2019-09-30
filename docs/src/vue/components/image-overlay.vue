@@ -61,4 +61,4 @@ export default {
 }
 </script>
 
-<style lang="less" src="../../less/image-overlay.less"></style>
+<style lang="less" src="../../style/image-overlay.less"></style>

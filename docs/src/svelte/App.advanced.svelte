@@ -48,11 +48,12 @@
 </div>
 <div bind:this={element}>
   <ImageMasonry images={images} targetRowHeight={targetRowHeight} on:image-click={onClick} let:image={image}>
-    <div class="image-masonry-overlay">
-      <div class="image-masonry-text">{image.title}</div>
+    <div class="image-overlay">
+      <div class="image-text">{image.title}</div>
     </div>
   </ImageMasonry>
 </div>
 
-
-<style src="../image-details.css"></style>
+<style lang="less">
+  @import 'docs/src/style/image-overlay.less';
+</style>

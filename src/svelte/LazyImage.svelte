@@ -50,4 +50,14 @@
   {/if}
 </div>
 
-<style src="../common/lazy-image.css"></style>
+<style lang="less">
+  @import 'src/style/lazy-image.mixin.less';
+
+  .lazy-image-container {
+    .lazy-image-container
+  }
+
+  .lazy-image {
+    .lazy-image
+  }
+</style>

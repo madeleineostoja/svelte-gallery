@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import Checkbox from './Checkbox.jsx';
-import styles from '../../less/image-overlay.less';
+import styles from '../../style/image-overlay.less';
 
 export default function ImageOverlay({
   image,

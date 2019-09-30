@@ -55,4 +55,14 @@ export default {
 };
 </script>
 
-<style scoped lang="less" src="../common/lazy-image.less"></style>
+<style scoped lang="less">
+  @import '../style/lazy-image.mixin.less';
+
+  .lazy-image-container {
+    .lazy-image-container
+  }
+
+  .lazy-image {
+    .lazy-image
+  }
+</style>

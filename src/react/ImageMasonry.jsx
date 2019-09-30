@@ -3,7 +3,7 @@ import ReactResizeDetector from 'react-resize-detector';
 import MasonryItem from './MasonryItem.jsx';
 import createLayout from '../common/justified-layout';
 import { debounce } from '../common/utils';
-import styles from '../common/image-masonry.less';
+import cn from './style/classNames';
 
 export default function ImageMasonry({
   images,
@@ -19,7 +19,7 @@ export default function ImageMasonry({
     width: 0
   });
   const containerStyle = { width: state.width + 'px' };
-  const isResizingClassName = isResizing ? styles['is-resizing'] : '';
+  const isResizingClassName = isResizing ? cn.isResizing : '';
 
   const handleClick = (index, event) => {
     if (onImageClick) {
@@ -62,13 +62,13 @@ export default function ImageMasonry({
   }, [images, targetRowHeight]);
 
   return (
-    <div className={styles['image-masonry'] + ' ' + isResizingClassName} ref={element}>
+    <div className={cn.masonry + ' ' + isResizingClassName} ref={element}>
       <ReactResizeDetector
         handleWidth
         skipOnMount
         onResize={onResize}
       />
-      <div className={styles['image-masonry-container']} style={containerStyle}>
+      <div className={cn.container} style={containerStyle}>
         {state.images.map(image =>
           <MasonryItem key={image.src} image={image} onClick={handleClick} padding={padding} render={render} />
         )}
