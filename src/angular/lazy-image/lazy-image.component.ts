@@ -1,4 +1,4 @@
-import { Component, AfterContentInit, Input, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { Component, AfterContentInit, Input, ElementRef, ChangeDetectorRef, HostBinding } from '@angular/core';
 import whenElementVisible from '../../common/when-element-visible';
 
 const cache = {};
@@ -6,7 +6,7 @@ const cache = {};
 @Component({
   selector: 'lazy-image',
   templateUrl: './lazy-image.component.html',
-  styleUrls: ['../../common/lazy-image.css'],
+  styleUrls: ['./lazy-image.component.less'],
   host: { 'class': 'lazy-image-container', 'data-masonry-image': '' }
 })
 export class LazyImageComponent implements AfterContentInit {
@@ -16,7 +16,7 @@ export class LazyImageComponent implements AfterContentInit {
   @Input() srcset: string;
   @Input() alt: string;
 
-  isLoaded = false;
+  @HostBinding('class.is-loaded') isLoaded:boolean = false;
   isVisible = false;
   _observer_disconnect = null;
 

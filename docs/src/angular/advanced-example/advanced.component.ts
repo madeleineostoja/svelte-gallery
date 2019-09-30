@@ -2,35 +2,52 @@ import { Component, ElementRef } from '@angular/core';
 import images from '../../images-advanced';
 import openPhotoSwipe from '../../photoswipe';
 
-function shuffleArray(array: any[]) {
-  for (let i = array.length - 1; i > 0; i--) {
+export function shuffleArray(array: any[]) {
+  const clone: any[] = [...array];
+  for (let i = clone.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
+    [clone[i], clone[j]] = [clone[j], clone[i]];
   }
+  return clone;
+}
+
+interface ExampleImage extends Image {
+  original: string,
+  title: string
 }
 
 @Component({
   selector: 'advanced-example',
   templateUrl: './advanced.component.html',
-  styleUrls: ['../../image-details.css']
+  styleUrls: ['./advanced.component.less']
 })
 export class AdvancedComponent {
   constructor(private elementRef: ElementRef) { }
 
-  images = images;
+  images: ExampleImage[] = images;
   targetRowHeight = 220;
+  selectedImages = [];
+  isSelecting = false;
 
   onChangeImages () {
-    const newArray = [...images];
-    shuffleArray(newArray);
-    this.images = newArray;
+    this.images = shuffleArray(this.images);
   }
 
   onChangeRowHeight() {
     this.targetRowHeight = this.targetRowHeight + 50
   }
 
-  onImageClick({ index }) {
+  onSelect({ value, index } : { value: boolean, index: number }) {
+    if (value) {
+      this.selectedImages.push(this.images[index]);
+    } else {
+      const removeIndex = this.selectedImages.indexOf(this.images[index]);
+      this.selectedImages.splice(removeIndex, 1);
+    }
+    this.isSelecting = !!this.selectedImages.length;
+  }
+
+  onImageView(index: number) {
     // create array compatible with PhotoSwipe
     const images = this.images.map(({ src, width, height, original, title }) => {
       return {
@@ -41,8 +58,8 @@ export class AdvancedComponent {
         title
       }
     });
-    openPhotoSwipe(images, index, (index) => {
-      return this.elementRef.nativeElement.querySelector('image-masonry').querySelectorAll('[data-masonry-image]')[index];
+    openPhotoSwipe(images, index, (index: number) => {
+      return this.elementRef.nativeElement.querySelector('image-masonry').querySelectorAll('[data-masonry-image]')[index].querySelector('img');
     });
   }
 

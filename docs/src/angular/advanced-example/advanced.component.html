@@ -3,11 +3,9 @@
     <button class="btn btn-light btn-sm" type="button" (click)="onChangeImages()">Shuffle images</button>
     <button class="btn btn-light btn-sm" type="button" (click)="onChangeRowHeight()">Increase row height</button>
   </div>
-  <image-masonry #imageMasonry [images]="images" [targetRowHeight]="targetRowHeight" (imageClick)="onImageClick($event)">
+  <image-masonry #imageMasonry [images]="images" [targetRowHeight]="targetRowHeight">
     <ng-template #imageDetails let-image>
-      <div class="image-masonry-overlay">
-        <div class="image-masonry-text">{{image.title}}</div>
-      </div>
+      <image-overlay (selectChange)="onSelect($event)" (view)="onImageView($event)" [selectMode]="isSelecting" [image]="image"></image-overlay>
     </ng-template>
   </image-masonry>
 </div>

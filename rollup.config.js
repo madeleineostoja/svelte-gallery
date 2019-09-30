@@ -11,6 +11,19 @@ import svelte from 'rollup-plugin-svelte';
 import postcss from 'rollup-plugin-postcss';
 import autoPreprocess from 'svelte-preprocess';
 import svg from 'rollup-plugin-svg';
+import less from 'less';
+
+less.renderSync = function(input, options) {
+  if (!options || typeof options != "object") options = {};
+  options.sync = true;
+  options.syncImport = true;
+  let css;
+  this.render(input, options, function(err, result) {
+    if (err) throw err;
+    css = result.css;
+  });
+  return css;
+};
 
 const env = argv.environment;
 const file = `docs/dist/image-masonry-${env}.js`;
@@ -91,7 +104,14 @@ if (env === 'litelement' || env === 'litelement-advanced') {
 if (env === 'angular') {
   input = 'docs/src/angular/main.ts';
   plugins.push(
-    angular(),
+    svg(),
+    angular({
+      preprocessors: {
+        style: lessInput => {
+          return less.renderSync(lessInput);
+        }
+      }
+    }),
     typescript(),
     babel({
       presets: [ '@babel/preset-env'],

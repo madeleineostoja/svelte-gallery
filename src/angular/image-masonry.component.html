@@ -2,8 +2,8 @@
   <div data-resizer></div>
   <div class="image-masonry-container" [ngStyle]="{'width' : width + 'px'}">
     <div *ngFor="let image of scaledImages; trackBy:identify" class="masonry-item" [ngStyle]="makeStyle(image)" (click)="onClick(image.index, $event)">
-      <lazy-image [src]="image.src" [srcset]="image.srcset" [alt]="image.alt"></lazy-image>
       <ng-container *ngTemplateOutlet="imageDetailsTmpl, context: { $implicit: image }"></ng-container>
+      <lazy-image [src]="image.src" [srcset]="image.srcset" [alt]="image.alt"></lazy-image>
     </div>
   </div>
 </div>

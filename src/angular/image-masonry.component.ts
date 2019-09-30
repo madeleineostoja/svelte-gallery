@@ -6,7 +6,7 @@ import { debounce } from '../common/utils';
 @Component({
   selector: 'image-masonry',
   templateUrl: './image-masonry.component.html',
-  styleUrls: ['./image-masonry.component.css', '../common/style.css']
+  styleUrls: ['./image-masonry.component.less']
 })
 export class ImageMasonryComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private elementRef: ElementRef, private changeDetectorRef: ChangeDetectorRef) { }
@@ -16,12 +16,12 @@ export class ImageMasonryComponent implements OnInit, OnChanges, OnDestroy {
   @Input() targetRowHeight: number = 220;
   @Input() padding: number = 4;
 
-  scaledImages = [];
+  scaledImages: ScaledImage[] = [];
   width = 0;
   isResizing = false;
 
   ngOnInit() {
-    const el = this.elementRef.nativeElement.querySelector('[data-resizer]');
+    const el: Element = this.elementRef.nativeElement.querySelector('[data-resizer]');
     const resizedFinished = debounce(() => {
       this.isResizing = false;
       this.changeDetectorRef.detectChanges();
@@ -56,7 +56,7 @@ export class ImageMasonryComponent implements OnInit, OnChanges, OnDestroy {
     })
   }
 
-  makeStyle({ scaledWidth, scaledHeight, isLastInRow, isLastRow }) {
+  makeStyle({ scaledWidth, scaledHeight, isLastInRow, isLastRow }: ScaledImage) {
     let mr = this.padding + 'px';
     const mb = isLastRow ? '0' : mr;
     let flex = `0 0 ${scaledWidth}px`;
@@ -80,7 +80,7 @@ export class ImageMasonryComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  identify(index, item) {
+  identify(index: number, item: ScaledImage) {
     return item.src;
   }
 }
