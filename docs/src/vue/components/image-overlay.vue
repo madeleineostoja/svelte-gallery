@@ -20,7 +20,7 @@
 
 <script>
 import checkbox from './checkbox.vue';
-import svg from "../../magnify.svg";
+import svg from '../../magnify.svg';
 
 export default {
   props: {
