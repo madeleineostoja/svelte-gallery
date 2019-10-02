@@ -80,14 +80,14 @@
   @import 'src/style/image-masonry.mixin.less';
 
   .image-masonry {
-    .image-masonry
+    @image-masonry();
   }
 
   .image-masonry-container {
-    .image-masonry-container
+    @image-masonry-container();
   }
 
   .masonry-item {
-    .masonry-item
+    @masonry-item();
   }
 </style>

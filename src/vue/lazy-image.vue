@@ -59,10 +59,10 @@ export default {
   @import '../style/lazy-image.mixin.less';
 
   .lazy-image-container {
-    .lazy-image-container
+    @lazy-image-container();
   }
 
   .lazy-image {
-    .lazy-image
+    @lazy-image();
   }
 </style>

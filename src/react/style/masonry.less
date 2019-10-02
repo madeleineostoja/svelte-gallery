@@ -2,21 +2,21 @@
 @import '../../style/lazy-image.mixin.less';
 
 .masonry {
-  .image-masonry
+  @image-masonry();
 }
 
 .container {
-  .image-masonry-container
+  @image-masonry-container();
 }
 
 .item {
-  .masonry-item
+  @masonry-item();
 }
 
 .image-container {
-  .lazy-image-container
+  @lazy-image-container();
 }
 
 .image {
-  .lazy-image
+  @lazy-image();
 }
