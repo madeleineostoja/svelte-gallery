@@ -20,7 +20,7 @@
 
 <script>
 import checkbox from './checkbox.vue';
-import svg from '../../magnify.svg';
+import svg from '../../svg/magnify.svg';
 
 export default {
   props: {
@@ -61,4 +61,26 @@ export default {
 }
 </script>
 
-<style lang="less" src="../../style/image-overlay.less"></style>
+<style lang="less">
+  @import '../../style/image-overlay.less';
+
+  .image-overlay {
+    @image-overlay();
+  }
+
+  .image-text {
+    @image-text();
+  }
+
+  .image-checkbox {
+    @image-checkbox();
+  }
+
+  .image-magnify {
+    @image-magnify();
+  }
+
+  .select-mode {
+    @select-mode();
+  }
+</style>

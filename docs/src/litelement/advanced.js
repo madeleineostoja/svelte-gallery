@@ -1,7 +1,7 @@
 import { LitElement, html, css, unsafeCSS } from 'lit-element';
 import '../../../src/litelement/image-masonry';
 import sampleImages from '../images-advanced';
-import styles from '../image-details.css';
+import styles from './style.less';
 import openPhotoSwipe from '../photoswipe';
 
 function shuffleArray(array) {
@@ -66,8 +66,8 @@ class ImageMasonryExample extends LitElement {
 
   imageDetails(image) {
     return html `
-      <div class="image-masonry-overlay">
-        <div class="image-masonry-text">${image.title}</div>
+      <div class="image-overlay">
+        <div class="image-text">${image.title}</div>
       </div>
     `
   }

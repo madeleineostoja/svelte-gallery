@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import svg from "../../check.svg";
+import svg from "../../svg/check.svg";
 
 export default {
   props: {
@@ -44,4 +44,11 @@ export default {
 };
 </script>
 
-<style lang="less" src="../../style/checkbox.less"></style>
+<style lang="less">
+  @import '../../style/checkbox.less';
+
+  .checkbox {
+    @checkbox();
+  }
+
+</style>

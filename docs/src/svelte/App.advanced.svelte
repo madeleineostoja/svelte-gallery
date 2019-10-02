@@ -56,4 +56,11 @@
 
 <style lang="less">
   @import 'docs/src/style/image-overlay.less';
+  .image-overlay {
+    @image-overlay();
+  }
+
+  .image-text {
+    @image-text();
+  }
 </style>

@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import styles from '../../style/checkbox.less';
+import { useState, useEffect } from 'react';
+import cn from '../style/classNames';
 
 export default function Checkbox({
   label,
@@ -23,10 +23,10 @@ export default function Checkbox({
     setIsChecked(checked);
   }, [checked])
 
-  const classNames = [className, styles['checkbox']];
-  isChecked && classNames.push(styles['is-checked']);
-  highlight && classNames.push(styles['is-highlighted']);
-  hover && classNames.push(styles['is-hovering']);
+  const classNames = [className, cn.checkbox];
+  isChecked && classNames.push(cn.isChecked);
+  highlight && classNames.push(cn.isHighlighted);
+  hover && classNames.push(cn.isHovering);
 
   return (
     <span
