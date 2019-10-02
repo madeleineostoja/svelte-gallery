@@ -26,7 +26,7 @@
 import sampleImages from '../images-advanced';
 import imageMasonry from '../../../src/vue/image-masonry.vue';
 import imageOverlay from './components/image-overlay.vue';
-import openPhotoSwipe from '../photoswipe';
+import openPhotoSwipe from '../../photoswipe/index';
 import { shuffleArray } from '../utils';
 
 export default {

@@ -2,7 +2,7 @@ import { LitElement, html, css, unsafeCSS } from 'lit-element';
 import '../../../src/litelement/image-masonry';
 import sampleImages from '../images-advanced';
 import styles from './style.less';
-import openPhotoSwipe from '../photoswipe';
+import openPhotoSwipe from '../../photoswipe/index';
 
 function shuffleArray(array) {
   for (let i = array.length - 1; i > 0; i--) {

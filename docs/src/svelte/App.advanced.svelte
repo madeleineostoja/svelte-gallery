@@ -1,7 +1,7 @@
 <script>
   import ImageMasonry from '../../../src/svelte/ImageMasonry.svelte';
   import sampleImages from '../images-advanced';
-  import openPhotoSwipe from '../photoswipe';
+  import openPhotoSwipe from '../../photoswipe/index';
 
   function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {

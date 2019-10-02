@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import ImageMasonry from '../../../src/react/ImageMasonry.jsx';
 import ImageOverlay from './components/ImageOverlay.jsx';
 import sampleImages from '../images-advanced';
-import openPhotoSwipe from '../photoswipe';
+import openPhotoSwipe from '../../photoswipe/index';
 import { shuffleArray } from '../utils';
 
 export default function () {

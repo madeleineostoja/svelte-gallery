@@ -1,6 +1,6 @@
 import { Component, ElementRef } from '@angular/core';
 import images from '../../images-advanced';
-import openPhotoSwipe from '../../photoswipe';
+import openPhotoSwipe from '../../../photoswipe/index';
 
 export function shuffleArray(array: any[]) {
   const clone: any[] = [...array];
