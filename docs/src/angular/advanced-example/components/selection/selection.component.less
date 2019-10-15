@@ -1,0 +1,63 @@
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+div {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  background-color: #141414;
+  width: 100%;
+  //box-shadow: 0 2px 4px -1px rgba(0,0,0,0.2), 0 4px 5px 0 rgba(0,0,0,0.14), 0 1px 10px 0 rgba(0,0,0,0.12);
+  border-bottom: 1px solid #000;
+  height: 47px;
+  line-height: 40px;
+  border: 1px solid #666;
+}
+
+.deselect-all {
+  display: inline-block;
+  border: 0;
+  background: none;
+  opacity: 0.65;
+  width: 35px;
+  height: 35px;
+  padding: 10px;
+  margin-right: 14px;
+  margin-left: 5px;
+
+  svg {
+    color: inherit;
+    display: block;
+    fill: #FFF;
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+  }
+
+  &:hover {
+    opacity: 1;
+  }
+
+}
+
+span {
+  display: inline-block;
+}
+
+.select-all {
+  background: none;
+  border: none;
+  padding: 0;
+  color: #FFF;
+  opacity: 0.65;
+  margin-left: auto;
+  margin-right: 20px;
+
+  &:hover {
+    opacity: 1;
+  }
+}

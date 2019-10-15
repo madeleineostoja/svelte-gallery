@@ -1,6 +1,11 @@
-import { Component, ElementRef } from '@angular/core';
+import { Component, ElementRef, OnInit, OnDestroy } from '@angular/core';
 import images from '../../images-advanced';
 import openPhotoSwipe from '../../../photoswipe/index';
+
+import { NgRedux, select } from '@angular-redux/store';
+import { ImageActions } from './actions';
+import { AppState } from './store';
+import { Observable, Subscription } from 'rxjs';
 
 export function shuffleArray(array: any[]) {
   const clone: any[] = [...array];
@@ -11,40 +16,42 @@ export function shuffleArray(array: any[]) {
   return clone;
 }
 
-interface ExampleImage extends Image {
-  original: string,
-  title: string
-}
-
 @Component({
   selector: 'advanced-example',
   templateUrl: './advanced.component.html',
   styleUrls: ['./advanced.component.less']
 })
-export class AdvancedComponent {
-  constructor(private elementRef: ElementRef) { }
+export class AdvancedComponent implements OnInit, OnDestroy {
+  constructor(
+    private elementRef: ElementRef,
+    private ngRedux: NgRedux<AppState>,
+    private actions: ImageActions
+  ) { }
 
-  images: ExampleImage[] = images;
+  @select() readonly images$: Observable<ExampleImage[]>
+  @select() readonly selectedImages$: Observable<ExampleImage[]>;
+
+  images: ExampleImage[];
   targetRowHeight = 220;
-  selectedImages = [];
-  isSelecting = false;
+  subscription: Subscription;
+
+  ngOnInit() {
+   this.ngRedux.dispatch(this.actions.set(images));
+   this.subscription = this.images$.subscribe(images => {
+    this.images = images;
+   });
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
+  }
 
   onChangeImages () {
-    this.images = shuffleArray(this.images);
+    this.ngRedux.dispatch(this.actions.set(shuffleArray(this.images)));
   }
 
   onChangeRowHeight() {
     this.targetRowHeight = this.targetRowHeight + 50
-  }
-
-  onSelect({ value, index } : { value: boolean, index: number }) {
-    if (value) {
-      this.selectedImages.push(this.images[index]);
-    } else {
-      const removeIndex = this.selectedImages.indexOf(this.images[index]);
-      this.selectedImages.splice(removeIndex, 1);
-    }
-    this.isSelecting = !!this.selectedImages.length;
   }
 
   onImageView(index: number) {
@@ -58,7 +65,7 @@ export class AdvancedComponent {
         title
       }
     });
-    openPhotoSwipe(images, index, (index: number) => {
+    openPhotoSwipe(images, index, index => {
       return this.elementRef.nativeElement.querySelector('image-masonry').querySelectorAll('[data-masonry-image]')[index].querySelector('img');
     });
   }

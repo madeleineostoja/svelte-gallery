@@ -1,11 +1,12 @@
 <div>
+  <selection *ngIf="(selectedImages$ | async)?.length"></selection>
   <div class="pb-3 text-right">
     <button class="btn btn-light btn-sm" type="button" (click)="onChangeImages()">Shuffle images</button>
     <button class="btn btn-light btn-sm" type="button" (click)="onChangeRowHeight()">Increase row height</button>
   </div>
-  <image-masonry #imageMasonry [images]="images" [targetRowHeight]="targetRowHeight">
+  <image-masonry #imageMasonry [images]="images$ | async" [targetRowHeight]="targetRowHeight">
     <ng-template #imageDetails let-image>
-      <image-overlay (selectChange)="onSelect($event)" (view)="onImageView($event)" [selectMode]="isSelecting" [image]="image"></image-overlay>
+      <image-overlay (view)="onImageView($event)" [image]="image"></image-overlay>
     </ng-template>
   </image-masonry>
 </div>

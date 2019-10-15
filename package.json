@@ -51,6 +51,7 @@
     "rollup-plugin-commonjs": "^10.1.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-postcss": "^2.0.3",
+    "rollup-plugin-replace": "^2.2.0",
     "rollup-plugin-svelte": "^5.1.0",
     "rollup-plugin-svg": "^2.0.0",
     "rollup-plugin-terser": "^5.1.2",
@@ -67,6 +68,7 @@
     "yargs": "^14.0.0"
   },
   "dependencies": {
+    "@angular-redux/store": "^10.0.0",
     "@angular/common": "^8.2.6",
     "@angular/compiler": "^8.2.6",
     "@angular/core": "^8.2.6",
@@ -81,6 +83,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-resize-detector": "^4.2.0",
+    "redux": "^4.0.4",
     "rollup-plugin-multi-input": "^1.0.2",
     "systemjs": "^6.1.0",
     "zone.js": "^0.10.2"
