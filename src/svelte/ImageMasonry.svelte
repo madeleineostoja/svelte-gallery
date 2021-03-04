@@ -57,6 +57,7 @@
       if (Math.round(width) !== Math.round(element.getBoundingClientRect().width)) {
         isResizing = true;
         width = element.getBoundingClientRect().width;
+        resizedFinished();
       }
     });
 
