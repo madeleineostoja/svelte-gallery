@@ -1,7 +1,9 @@
 {
   "name": "svelte-gallery",
   "version": "1.0.0",
-  "description": "",
+  "description": "Intelligent masonry style photo gallery that maintains image aspect ratios in perfect rows.",
+  "author": "Madeleine Ostoja",
+  "license": "MIT",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
   "svelte": "./src/index.js",
@@ -10,12 +12,18 @@
     "develop": "rollup -cw",
     "prepublishOnly": "yarn build"
   },
+  "keywords": [
+    "svelte",
+    "masonry-gallery",
+    "photo-gallery",
+    "masonry-rows",
+    "dijkstra",
+    "image-gallery"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/peppercornstudio/svelte-gallery.git"
   },
-  "author": "Madeleine Ostoja",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/peppercornstudio/svelte-gallery/issues"
   },
