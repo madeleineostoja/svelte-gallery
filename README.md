@@ -31,8 +31,8 @@ npm i svelte-gallery
 
 ### Properties
 
-| Property    | Description                                                                             | Type               | Default |
-| ----------- | --------------------------------------------------------------------------------------- | ------------------ | ------- |
-| `images`    | Collection of images for the gallery. Must have `src`, `width`, and `height` properties | `HTMLImageElement` | `[]`    |
-| `rowHeight` | Ideal row height to aim for in px                                                       | `number`           | `220`   |
-| `gutter`    | Gap between images in the gallery in px                                                 | `number`           | `4`     |
+| Property    | Description                                                          | Type               | Default |
+| ----------- | -------------------------------------------------------------------- | ------------------ | ------- |
+| `images`    | Images to display. Must have `src` and (native) `width` and `height` | `HTMLImageElement` | `[]`    |
+| `rowHeight` | Ideal row height to aim for in px                                    | `number`           | `220`   |
+| `gutter`    | Gap between images in the gallery in px                              | `number`           | `4`     |
