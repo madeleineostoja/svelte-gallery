@@ -8,6 +8,8 @@ The best possible layout is found by creating a graph of all possible row combin
 
 Originally forked from [fergaldoyle/image-masonry](https://github.com/fergaldoyle/image-masonry), `svelte-gallery` is a heavily refactored, updated, and maintained version of the core layout logic focussed on the Svelte implementation.
 
+![](https://raw.githubusercontent.com/fergaldoyle/image-masonry/master/docs/masonry.jpg)
+
 ### Usage
 
 ```sh
