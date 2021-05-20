@@ -10,5 +10,5 @@
     "lib": ["esnext", "dom"],
     "types": ["svelte"]
   },
-  "include": ["src", "@types"]
+  "include": ["src"]
 }

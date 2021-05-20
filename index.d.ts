@@ -1,16 +1,10 @@
 /// <reference types="svelte" />
 import { SvelteComponentTyped } from 'svelte';
 
-export interface GalleryImgProps {
-  src: string;
-  srcset: string;
-  alt: string;
-}
-
 export interface GalleryProps {
-  images: GalleryImgProps[];
-  targetRowHeight?: number;
-  padding?: number;
+  images: HTMLImageElement[];
+  rowHeight?: number;
+  gutter?: number;
 }
 
 export default class Gallery extends SvelteComponentTyped<
@@ -18,4 +12,3 @@ export default class Gallery extends SvelteComponentTyped<
   {},
   {}
 > {}
-export class GalleryImg extends SvelteComponentTyped<GalleryProps, {}, {}> {}
