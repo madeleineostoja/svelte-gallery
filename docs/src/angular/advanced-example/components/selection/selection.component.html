@@ -1,9 +1,0 @@
-<div>
- <button class="deselect-all" (click)="onClearSelected()">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.87 25.86"><title>x</title><path d="M24,25.86L12.93,14.8,1.86,25.86,0,24,11.06,12.93,0,1.86,1.86,0,12.93,11.06,24,0l1.87,1.87L14.8,12.93,25.86,24Z"/></svg>
- </button>
- <span>
-    {{ (selectedImages$ | async)?.length }} Selected
- </span>
- <button class="select-all" type="button" (click)="onSelectAll()">Select All</button>
-</div>
