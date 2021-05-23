@@ -1,4 +1,5 @@
 <script>
+  import Img from './lib/Img.svelte';
   import layout from './lib/layout';
 
   export let images = [];
@@ -63,7 +64,7 @@
   <div class="container" style="width: {width}px">
     {#each scaledImages as image}
       <div class="image" style={imgStyle(image)}>
-        <img {...image} />
+        <Img {...image} />
       </div>
     {/each}
   </div>

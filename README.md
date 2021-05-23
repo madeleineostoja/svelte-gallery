@@ -33,8 +33,12 @@ npm i svelte-gallery
 
 ### Properties
 
-| Property    | Description                                                          | Type               | Default |
-| ----------- | -------------------------------------------------------------------- | ------------------ | ------- |
-| `images`    | Images to display. Must have `src` and (native) `width` and `height` | `HTMLImageElement` | `[]`    |
-| `rowHeight` | Ideal row height to aim for in px                                    | `number`           | `220`   |
-| `gutter`    | Gap between images in the gallery in px                              | `number`           | `4`     |
+| Property    | Description                                                          | Type                                           | Default |
+| ----------- | -------------------------------------------------------------------- | ---------------------------------------------- | ------- |
+| `images`    | Images to display. Must have `src` and (native) `width` and `height` | `HTMLImageElement & { placeholder?: string; }` | `[]`    |
+| `rowHeight` | Ideal row height to aim for in px                                    | `number`                                       | `220`   |
+| `gutter`    | Gap between images in the gallery in px                              | `number`                                       | `4`     |
+
+### Placeholders
+
+Images in Svelte Gallery are lazily loaded. By default they are empty until they enter the viewport, at which point they load their `src` and/or `srcset`. You can optionally set a `placeholder` on each image to display before it loads, useful for the LQIP 'blur up' approach.

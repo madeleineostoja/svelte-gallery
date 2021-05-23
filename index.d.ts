@@ -2,7 +2,7 @@
 import { SvelteComponentTyped } from 'svelte';
 
 export interface GalleryProps {
-  images: HTMLImageElement[];
+  images: (HTMLImageElement & { placeholder?: string })[];
   rowHeight?: number;
   gutter?: number;
 }
