@@ -47,12 +47,13 @@
     display: flex;
     flex-wrap: wrap;
   }
+
   .image {
     position: relative;
     height: 100%;
   }
 
-  img {
+  .image :global(img) {
     display: block;
     width: 100%;
     height: 100%;
