@@ -2,11 +2,9 @@
 
 [![NPM](https://img.shields.io/npm/v/svelte-gallery)](https://www.npmjs.com/package/svelte-gallery) [![License](https://img.shields.io/npm/l/svelte-gallery)](https://github.com/peppercornstudio/svelte-gallery/blob/master/LICENSE)
 
-Intelligent masonry style photo gallery that maintains image aspect ratios in perfect rows.
+Intelligent masonry-style photo gallery that maintains image aspect ratios in perfect rows. Svelte gallery analyses a graph of all possible row combinations to find the ideal gallery layout based on a target row height.
 
-The best possible layout is found by creating a graph of all possible row combinations and finding the shortest path through the graph using a target ideal row height.
-
-Originally forked from [fergaldoyle/image-masonry](https://github.com/fergaldoyle/image-masonry), `svelte-gallery` is a heavily refactored, updated, and maintained version of the core layout logic focussed on the Svelte implementation.
+Originally forked from [fergaldoyle/image-masonry](https://github.com/fergaldoyle/image-masonry), `svelte-gallery` is a full rewrite taking the core layout logic and focussing on an updated, maintained svelte implementation.
 
 ![](https://raw.githubusercontent.com/fergaldoyle/image-masonry/master/docs/masonry.jpg)
 
@@ -33,12 +31,9 @@ npm i svelte-gallery
 
 ### Properties
 
-| Property    | Description                                                          | Type                                           | Default |
-| ----------- | -------------------------------------------------------------------- | ---------------------------------------------- | ------- |
-| `images`    | Images to display. Must have `src` and (native) `width` and `height` | `HTMLImageElement & { placeholder?: string; }` | `[]`    |
-| `rowHeight` | Ideal row height to aim for in px                                    | `number`                                       | `220`   |
-| `gutter`    | Gap between images in the gallery in px                              | `number`                                       | `4`     |
-
-### Placeholders
-
-Images in Svelte Gallery are lazily loaded. By default they are empty until they enter the viewport, at which point they load their `src` and/or `srcset`. You can optionally set a `placeholder` on each image to display before it loads, useful for the LQIP 'blur up' approach.
+| Property         | Description                                                         | Type                 | Default |
+| ---------------- | ------------------------------------------------------------------- | -------------------- | ------- |
+| `images`         | Images to display. Must (native) `width` and `height` values        | `HTMLImageElement[]` | `[]`    |
+| `rowHeight`      | Ideal row height to aim for in px                                   | `number`             | `220`   |
+| `gutter`         | Gap between images in the gallery in px                             | `number`             | `8`     |
+| `imageComponent` | Optional custom image component, passed all props in `images` array | `SvelteComponent`    | `img`   |

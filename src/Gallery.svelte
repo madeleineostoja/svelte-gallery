@@ -4,7 +4,7 @@
 
   export let images = [];
   export let rowHeight = 220;
-  export let gutter = 4;
+  export let gutter = 8;
   export let imageComponent = Img;
 
   let scaledImages = [];
@@ -54,8 +54,7 @@
     height: 100%;
   }
 
-  .image :global(img) {
-    display: block;
+  .image > :global(*) {
     width: 100%;
     height: 100%;
   }
