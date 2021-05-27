@@ -1,6 +1,7 @@
 import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import commonJS from '@rollup/plugin-commonjs';
+import { terser } from 'rollup-plugin-terser';
 
 import pkg from './package.json';
 
@@ -10,5 +11,5 @@ export default {
     { file: pkg.module, format: 'es' },
     { file: pkg.main, format: 'umd', name: 'svelte-gallery' }
   ],
-  plugins: [svelte({ emitCss: false }), resolve(), commonJS()]
+  plugins: [svelte({ emitCss: false }), resolve(), commonJS(), terser()]
 };
