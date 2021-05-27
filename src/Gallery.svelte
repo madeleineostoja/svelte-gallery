@@ -5,6 +5,7 @@
   export let images = [];
   export let rowHeight = 220;
   export let gutter = 4;
+  export let imageComponent = Img;
 
   let scaledImages = [];
   let width;
@@ -65,7 +66,7 @@
   <div class="container" style="width: {width}px">
     {#each scaledImages as image}
       <div class="image" style={imgStyle(image)}>
-        <Img {...image} />
+        <svelte:component this={imageComponent} {...image} />
       </div>
     {/each}
   </div>
