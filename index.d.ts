@@ -5,7 +5,7 @@ export interface GalleryProps {
   images: (HTMLImageElement & { placeholder?: string })[];
   rowHeight?: number;
   gutter?: number;
-  imageComponent?: SvelteComponent;
+  imageComponent?: typeof SvelteComponent;
 }
 
 export default class Gallery extends SvelteComponentTyped<
