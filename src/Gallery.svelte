@@ -63,8 +63,11 @@
 
 <div class="masonry" bind:clientWidth={width}>
   <div class="container" style="width: {width}px">
-    {#each scaledImages as image}
-      <div class="image" style={imgStyle(image)}>
+    {#each scaledImages as { index, ratio, scaledHeight, scaledWidth, isLastInRow, isLastRow, scaledWidthPc, ...image }}
+      <div
+        class="image"
+        style={imgStyle({ scaledHeight, scaledWidth, isLastInRow, isLastRow })}
+      >
         <svelte:component this={imageComponent} {...image} />
       </div>
     {/each}
