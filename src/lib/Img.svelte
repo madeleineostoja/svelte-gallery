@@ -3,6 +3,7 @@
 
   export let placeholder = '';
   export let src;
+  export let srcset;
 
   let img;
   let intersected = false;
@@ -21,4 +22,9 @@
 
 </script>
 
-<img bind:this={img} src={intersected ? src : placeholder} {...$$restProps} />
+<img
+  bind:this={img}
+  src={intersected ? src : placeholder}
+  srcset={intersected ? srcset : undefined}
+  {...$$restProps}
+/>
