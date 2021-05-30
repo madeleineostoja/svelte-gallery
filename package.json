@@ -1,6 +1,6 @@
 {
   "name": "svelte-gallery",
-  "version": "1.3.2",
+  "version": "1.3.3",
   "description": "Intelligent masonry style photo gallery that maintains image aspect ratios in perfect rows.",
   "author": "Madeleine Ostoja",
   "license": "MIT",
